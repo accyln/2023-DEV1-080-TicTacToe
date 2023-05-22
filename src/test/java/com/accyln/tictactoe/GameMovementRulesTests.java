@@ -2,6 +2,7 @@ package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import com.accyln.tictactoe.services.GameService;
 import org.junit.jupiter.api.Assertions;
@@ -46,4 +47,26 @@ public class GameMovementRulesTests {
 
         Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game,rowId,colId, player2.getSign()));
     }
+
+    @Test
+    @DisplayName("Testing that players cannot sign in succession")
+    public void assert_same_player_cannot_make_a_move_in_succession(){
+        Player player1=new Player('X');
+        Player player2= new Player('O');
+
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
+
+        int firstMoveRowId=0;
+        int firstMoveColId=0;
+        int secondMoveRowId=0;
+        int secondMoveColId=1;
+
+        GameService gameService= new GameService();
+        gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getSign());
+
+        Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getSign()));
+    }
+
+
 }

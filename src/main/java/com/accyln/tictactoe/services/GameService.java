@@ -1,6 +1,7 @@
 package com.accyln.tictactoe.services;
 
 import com.accyln.tictactoe.entities.Game;
+import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import org.springframework.stereotype.Service;
 @Service
@@ -16,7 +17,11 @@ public class GameService {
         if(board[rowId][colId]!=0){
             throw new SquareAlreadyTakenException();
         }
-        
+        //checking that current player sign is not equal to last move
+        if(sign==game.getLastPlayedSign()){
+            throw new SamePlayerCannotSignInSuccesion();
+        }
+
         board[rowId][colId]=sign;
         game.setLastPlayedSign(sign);
 
