@@ -8,6 +8,7 @@ public class Game {
     private char lastPlayedSign='O';
     private String gameStatus="ONGOING";
     private char winner;
+    private int moveCount;
 
     public Game(Long player1_id, Long player2_id) {
         this.player1_id = player1_id;
@@ -66,5 +67,13 @@ public class Game {
 
     public void setWinner(char winner) {
         this.winner = winner;
+    }
+
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    public void setMoveCount(int moveCount) {
+        this.moveCount = moveCount;
     }
 }

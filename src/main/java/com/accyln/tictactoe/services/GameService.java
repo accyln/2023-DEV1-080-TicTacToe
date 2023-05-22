@@ -27,10 +27,15 @@ public class GameService {
 
         board[rowId][colId]=sign;
         game.setLastPlayedSign(sign);
+        game.setMoveCount(game.getMoveCount()+1);
 
         char winner=checkWinner(board);
         if(winner != 0) {
             game.setWinner(winner);
+            game.setGameStatus("ENDED");
+        }
+
+        if (game.getMoveCount()==9){
             game.setGameStatus("ENDED");
         }
 
