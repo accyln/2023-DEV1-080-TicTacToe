@@ -11,6 +11,12 @@ public class Player {
         this.sign=sign;
     }
 
+    public Player(Long id, String name, char sign) {
+        this.id = id;
+        this.name = name;
+        this.sign = sign;
+    }
+
     public Long getId() {
         return id;
     }
