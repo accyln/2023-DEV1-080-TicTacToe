@@ -8,7 +8,6 @@ import com.accyln.tictactoe.services.GameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -66,6 +65,20 @@ public class GameMovementRulesTests {
         gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getSign());
 
         Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getSign()));
+    }
+
+    @Test
+    @DisplayName("Testing that making a move signed correct place on the board")
+    public void assert_that_correct_square_signed_on_the_board(){
+        Player player1=new Player('X');
+        Player player2= new Player('O');
+        int rowId=1;
+        int colId=1;
+        GameService gameService=new GameService();
+        Game game=gameService.createGame(player1.getId(),player2.getId());
+        gameService.makeAmove(game,rowId,colId,player1.getSign());
+
+        Assertions.assertEquals('X',game.getBoard()[rowId][colId]);
     }
 
 

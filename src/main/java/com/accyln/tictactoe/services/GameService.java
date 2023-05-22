@@ -10,6 +10,9 @@ public class GameService {
     public GameService(){
 
     }
+    public Game createGame(Long player1Id,Long player2Id){
+        return new Game(player1Id,player2Id);
+    }
 
     public Game makeAmove(Game game, int rowId, int colId, char sign){
         char[][] board= game.getBoard();
@@ -27,4 +30,5 @@ public class GameService {
 
         return game;
     }
+
 }
