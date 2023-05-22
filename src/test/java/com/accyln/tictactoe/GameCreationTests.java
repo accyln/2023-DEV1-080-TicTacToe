@@ -2,6 +2,7 @@ package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.services.GameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,8 @@ public class GameCreationTests {
         Player player2= new Player('O');
         player2.setId(2l);
 
-        Game game= new Game(player1.getId(),player2.getId());
+        GameService gameService=new GameService();
+        Game game=gameService.createGame(player1.getId(),player2.getId());
 
         Assertions.assertInstanceOf(char[][].class,game.getBoard());
     }
@@ -31,7 +33,8 @@ public class GameCreationTests {
         Player player2= new Player('O');
         player2.setId(2l);
 
-        Game game= new Game(player1.getId(),player2.getId());
+        GameService gameService=new GameService();
+        Game game=gameService.createGame(player1.getId(),player2.getId());
 
 
         Assertions.assertEquals(1L,game.getPlayer1_id());

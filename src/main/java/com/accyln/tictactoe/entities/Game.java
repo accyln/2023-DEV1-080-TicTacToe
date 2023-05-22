@@ -5,6 +5,7 @@ public class Game {
     private char[][] board=new char[3][3];
     private Long player1_id;
     private Long player2_id;
+    private char lastPlayedSign='O';
 
     public Game(Long player1_id, Long player2_id) {
         this.player1_id = player1_id;
@@ -41,5 +42,11 @@ public class Game {
 
     public void setPlayer2_id(Long player2_id) {
         this.player2_id = player2_id;
+    }
+    public char getLastPlayedSign() {
+        return lastPlayedSign;
+    }
+    public void setLastPlayedSign(char lastPlayedSign) {
+        this.lastPlayedSign = lastPlayedSign;
     }
 }
