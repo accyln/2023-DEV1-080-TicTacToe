@@ -48,6 +48,14 @@ public class GameController {
         return new ResponseEntity<>(gameService.createGame(createGameRequestDto.getPlayer1Id(), createGameRequestDto.getPlayer2Id()), HttpStatus.CREATED);
     }
 
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * The endpoint for making a sign on the board
+     *
+     * @param makeAMoveRequestDto
+     * @return ResponseEntity<Game>
+     */
     @PostMapping("/makeAmove")
     public ResponseEntity<Game> makeAmove(@RequestBody MakeAMoveRequestDto makeAMoveRequestDto){
         return new ResponseEntity<>(gameService.makeAmove(makeAMoveRequestDto.getGame(), makeAMoveRequestDto.getRowId(),makeAMoveRequestDto.getColId(),makeAMoveRequestDto.getSign()), HttpStatus.CREATED);
