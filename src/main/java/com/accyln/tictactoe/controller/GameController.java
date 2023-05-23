@@ -58,7 +58,7 @@ public class GameController {
      */
     @PostMapping("/makeAmove")
     public ResponseEntity<Game> makeAmove(@RequestBody MakeAMoveRequestDto makeAMoveRequestDto){
-        return new ResponseEntity<>(gameService.makeAmove(makeAMoveRequestDto.getGame(), makeAMoveRequestDto.getRowId(),makeAMoveRequestDto.getColId(),makeAMoveRequestDto.getSign()), HttpStatus.CREATED);
+        return new ResponseEntity<>(gameService.makeAmove(makeAMoveRequestDto.getGameId(), makeAMoveRequestDto.getRowId(),makeAMoveRequestDto.getColId(),makeAMoveRequestDto.getSign()), HttpStatus.CREATED);
     }
 
 

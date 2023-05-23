@@ -22,12 +22,12 @@ public interface IGameService {
 
     /**
      * Making a move and sign on the board
-     * @param game
+     * @param gameId
      * @param rowId
      * @param colId
      * @param sign
      * @return Game
      */
-    Game makeAmove(Game game, int rowId, int colId, char sign);
+    Game makeAmove(Long gameId, int rowId, int colId, char sign);
 
 }

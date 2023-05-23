@@ -6,11 +6,14 @@ import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
 import com.accyln.tictactoe.controller.GameController;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.repositories.IGameRepository;
+import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +35,10 @@ public class GameControllerTests {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
+    @MockBean
+    private IGameRepository mockGameRepository;
+    @MockBean
+    private IPlayerRepository mockPlayerRepository;
     @Test
     @DisplayName("Testing create player api")
     public void test_create_player_service() throws Exception{
@@ -63,12 +72,16 @@ public class GameControllerTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
+
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
         int rowId=0;
         int colId=0;
         char sign='X';
 
-        MakeAMoveRequestDto makeAMoveRequestDto= new MakeAMoveRequestDto(game,rowId,colId,sign);
+        MakeAMoveRequestDto makeAMoveRequestDto= new MakeAMoveRequestDto(game.getId(),rowId,colId,sign);
         String request=objectMapper.writeValueAsString(makeAMoveRequestDto);
 
         mockMvc.perform(MockMvcRequestBuilders

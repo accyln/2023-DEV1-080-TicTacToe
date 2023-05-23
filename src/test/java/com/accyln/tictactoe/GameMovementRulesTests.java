@@ -4,18 +4,28 @@ import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
+import com.accyln.tictactoe.repositories.IGameRepository;
+import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
 
 @SpringBootTest
 public class GameMovementRulesTests {
     @Autowired
     private IGameService gameService;
+    @MockBean
+    private IGameRepository mockGameRepository;
+    @MockBean
+    private IPlayerRepository mockPlayerRepository;
     @Test
     @DisplayName("Testing that player X makes first move")
     public void assert_that_x_moves_first(){
@@ -24,10 +34,14 @@ public class GameMovementRulesTests {
 
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
+
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
         int rowId=0;
         int colId=0;
 
-        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
+        gameService.makeAmove(game.getId(), rowId,colId,player1.getPlayerSign());
 
         Assertions.assertEquals('X',game.getBoard()[0][0]);
         Assertions.assertEquals('X',game.getLastPlayedSign());
@@ -41,12 +55,15 @@ public class GameMovementRulesTests {
 
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
+
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
         int rowId=0;
         int colId=0;
 
-        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),rowId,colId,player1.getPlayerSign());
 
-        Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game,rowId,colId, player2.getPlayerSign()));
+        Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game.getId(),rowId,colId, player2.getPlayerSign()));
     }
 
     @Test
@@ -58,13 +75,16 @@ public class GameMovementRulesTests {
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
 
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
         int firstMoveRowId=0;
         int firstMoveColId=0;
         int secondMoveRowId=0;
         int secondMoveColId=1;
-        gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),firstMoveRowId,firstMoveColId,player1.getPlayerSign());
 
-        Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getPlayerSign()));
+        Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game.getId(),secondMoveRowId,secondMoveColId, player1.getPlayerSign()));
     }
 
     @Test
@@ -74,11 +94,13 @@ public class GameMovementRulesTests {
         Player player2= new Player(2l,"Sarah",'O');
         int rowId=1;
         int colId=1;
-        Game game=gameService.createGame(player1.getId(),player2.getId());
-        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
+
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+        gameService.makeAmove(game.getId(),rowId,colId,player1.getPlayerSign());
 
         Assertions.assertEquals('X',game.getBoard()[rowId][colId]);
     }
-
-
 }

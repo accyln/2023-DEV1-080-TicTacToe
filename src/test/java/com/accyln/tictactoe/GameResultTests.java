@@ -3,31 +3,47 @@ package com.accyln.tictactoe;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
+import com.accyln.tictactoe.repositories.IGameRepository;
+import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest
 public class GameResultTests {
     @Autowired
     private IGameService gameService;
+    @MockBean
+    private IGameRepository mockGameRepository;
+    @MockBean
+    private IPlayerRepository mockPlayerRepository;
     @Test
     @DisplayName("Testing that X won the game")
     public void recognise_x_has_won() {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
 
-        gameService.makeAmove(game,0,0, player1.getPlayerSign());
-        gameService.makeAmove(game,1,1, player2.getPlayerSign());
-        gameService.makeAmove(game,0,1, player1.getPlayerSign());
-        gameService.makeAmove(game,2,0, player2.getPlayerSign());
-        gameService.makeAmove(game,0,2, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,1, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,0, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -40,14 +56,18 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        gameService.makeAmove(game,0,0, player1.getPlayerSign());
-        gameService.makeAmove(game,0,2, player2.getPlayerSign());
-        gameService.makeAmove(game,2,1, player1.getPlayerSign());
-        gameService.makeAmove(game,1,1, player2.getPlayerSign());
-        gameService.makeAmove(game,1,0, player1.getPlayerSign());
-        gameService.makeAmove(game,2,0, player2.getPlayerSign());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
+        gameService.makeAmove(game.getId(),0,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,2, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,1, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,0, player2.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('O',game.getWinner());
@@ -59,17 +79,21 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        gameService.makeAmove(game,0,0, player1.getPlayerSign());
-        gameService.makeAmove(game,2,0, player2.getPlayerSign());
-        gameService.makeAmove(game,1,0, player1.getPlayerSign());
-        gameService.makeAmove(game,1,1, player2.getPlayerSign());
-        gameService.makeAmove(game,0,2, player1.getPlayerSign());
-        gameService.makeAmove(game,0,1, player2.getPlayerSign());
-        gameService.makeAmove(game,2,1, player1.getPlayerSign());
-        gameService.makeAmove(game,2,2, player2.getPlayerSign());
-        gameService.makeAmove(game,1,2, player1.getPlayerSign());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
+        gameService.makeAmove(game.getId(),0,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,0, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,2, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,1, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,2, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals(9,game.getMoveCount());
@@ -80,13 +104,17 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        gameService.makeAmove(game,1,0, player1.getPlayerSign());
-        gameService.makeAmove(game,0,1, player2.getPlayerSign());
-        gameService.makeAmove(game,1,1, player1.getPlayerSign());
-        gameService.makeAmove(game,2,0, player2.getPlayerSign());
-        gameService.makeAmove(game,1,2, player1.getPlayerSign());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
+        gameService.makeAmove(game.getId(),1,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,0, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -99,13 +127,17 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        gameService.makeAmove(game,0,0, player1.getPlayerSign());
-        gameService.makeAmove(game,1,1, player2.getPlayerSign());
-        gameService.makeAmove(game,1,0, player1.getPlayerSign());
-        gameService.makeAmove(game,2,1, player2.getPlayerSign());
-        gameService.makeAmove(game,2,0, player1.getPlayerSign());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
+        gameService.makeAmove(game.getId(),0,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,0, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -118,13 +150,17 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        Game game=gameService.createGame(player1.getId(),player2.getId());
+        Game game=new Game(player1.getId(),player2.getId());
+        game.setId(1l);
 
-        gameService.makeAmove(game,0,0, player1.getPlayerSign());
-        gameService.makeAmove(game,0,1, player2.getPlayerSign());
-        gameService.makeAmove(game,1,1, player1.getPlayerSign());
-        gameService.makeAmove(game,2,1, player2.getPlayerSign());
-        gameService.makeAmove(game,2,2, player1.getPlayerSign());
+        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
+        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+
+        gameService.makeAmove(game.getId(),0,0, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),0,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),1,1, player1.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,1, player2.getPlayerSign());
+        gameService.makeAmove(game.getId(),2,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
