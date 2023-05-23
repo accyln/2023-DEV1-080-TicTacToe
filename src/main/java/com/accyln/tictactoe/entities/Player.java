@@ -17,4 +17,9 @@ public class Player {
     private String playerName;
     @Column(name = "PlayerSign")
     private char playerSign;
+
+    public Player(String playerName, char playerSign){
+        this.playerName=playerName;
+        this.playerSign=playerSign;
+    }
 }

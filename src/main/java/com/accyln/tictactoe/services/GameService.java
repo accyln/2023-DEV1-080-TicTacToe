@@ -5,21 +5,32 @@ import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
+import com.accyln.tictactoe.repositories.IGameRepository;
+import com.accyln.tictactoe.repositories.IPlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
+
 @Service
 public class GameService implements IGameService {
 
-    public GameService(){
-
+    @Autowired
+    private IGameRepository gameRepository;
+    @Autowired
+    private IPlayerRepository playerRepository;
+    public GameService(IGameRepository gameRepository,IPlayerRepository playerRepository){
+         this.gameRepository=gameRepository;
+         this.playerRepository=playerRepository;
     }
     public Player createPlayer(String name, char sign){
-        return new Player(1l,name,sign);
+        return playerRepository.save(new Player(name,sign));
     }
     public Game createGame(Long player1Id,Long player2Id){
-        return new Game(player1Id,player2Id);
+        return gameRepository.save(new Game(player1Id,player2Id));
     }
 
-    public Game makeAmove(Game game, int rowId, int colId, char sign){
+    public Game makeAmove(Long gameId, int rowId, int colId, char sign){
+        Game game=gameRepository.findById(gameId).orElseThrow(()->new NotFoundException("Game not found with id: "+ gameId));
         char[][] board= game.getBoard();
         //checking that played square cannot play twice
         if(board[rowId][colId]!=0){
@@ -43,6 +54,8 @@ public class GameService implements IGameService {
         if (game.getMoveCount()==9){
             game.setGameStatus(GameStatus.ENDED);
         }
+
+        gameRepository.save(game);
 
         return game;
     }

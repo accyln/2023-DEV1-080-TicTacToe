@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class MakeAMoveRequestDto {
-    private Game game;
+    private Long gameId;
     private int rowId;
     private int colId;
     private char sign;
