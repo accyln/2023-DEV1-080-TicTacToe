@@ -1,6 +1,7 @@
 package com.accyln.tictactoe.services;
 
 import com.accyln.tictactoe.entities.Game;
+import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,11 @@ public class GameService implements IGameService {
         char winner=checkWinner(board);
         if(winner != 0) {
             game.setWinner(winner);
-            game.setGameStatus("ENDED");
+            game.setGameStatus(GameStatus.ENDED);
         }
 
         if (game.getMoveCount()==9){
-            game.setGameStatus("ENDED");
+            game.setGameStatus(GameStatus.ENDED);
         }
 
         return game;

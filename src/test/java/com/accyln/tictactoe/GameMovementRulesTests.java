@@ -19,8 +19,8 @@ public class GameMovementRulesTests {
     @Test
     @DisplayName("Testing that player X makes first move")
     public void assert_that_x_moves_first(){
-        Player player1=new Player('X');
-        Player player2= new Player('O');
+        Player player1 = new Player(1l,"Can",'X');
+        Player player2= new Player(2l,"Sarah",'O');
 
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
@@ -36,8 +36,8 @@ public class GameMovementRulesTests {
     @Test
     @DisplayName("Testing that players cannot play on a played position")
     public void assert_that_players_cannot_play_on_a_played_position(){
-        Player player1=new Player('X');
-        Player player2= new Player('O');
+        Player player1 = new Player(1l,"Can",'X');
+        Player player2= new Player(2l,"Sarah",'O');
 
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
@@ -52,8 +52,8 @@ public class GameMovementRulesTests {
     @Test
     @DisplayName("Testing that players cannot sign in succession")
     public void assert_same_player_cannot_make_a_move_in_succession(){
-        Player player1=new Player('X');
-        Player player2= new Player('O');
+        Player player1 = new Player(1l,"Ahmet",'X');
+        Player player2= new Player(2l,"Sarah",'O');
 
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
@@ -70,8 +70,8 @@ public class GameMovementRulesTests {
     @Test
     @DisplayName("Testing that making a move signed correct place on the board")
     public void assert_that_correct_square_signed_on_the_board(){
-        Player player1=new Player('X');
-        Player player2= new Player('O');
+        Player player1 = new Player(1l,"Can",'X');
+        Player player2= new Player(2l,"Sarah",'O');
         int rowId=1;
         int colId=1;
         Game game=gameService.createGame(player1.getId(),player2.getId());

@@ -18,10 +18,8 @@ public class GameCreationTests {
     @Test
     @DisplayName("Testing that game board created correctly")
     public void assert_that_game_board_created_correctly(){
-        Player player1 = new Player('X');
-        player1.setId(1l);
-        Player player2= new Player('O');
-        player2.setId(2l);
+        Player player1 = new Player(1l,"Can",'X');
+        Player player2= new Player(2l,"Sarah",'O');
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
@@ -31,10 +29,8 @@ public class GameCreationTests {
     @Test
     @DisplayName("Testing that game created correctly")
     public void assert_that_game_created_correctly(){
-        Player player1 = new Player('X');
-        player1.setId(1l);
-        Player player2= new Player('O');
-        player2.setId(2l);
+        Player player1 = new Player(1l,"Can",'X');
+        Player player2= new Player(2l,"Sarah",'O');
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
