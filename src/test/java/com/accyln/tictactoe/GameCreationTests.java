@@ -38,8 +38,12 @@ public class GameCreationTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
+        int boardHeight=game.getBoard().length;
+        int boardWidth=game.getBoard()[0].length;
+
         Assertions.assertEquals(1L,game.getPlayer1_id());
         Assertions.assertEquals(2L,game.getPlayer2_id());
-        Assertions.assertEquals(3,game.getBoard().length);
+        Assertions.assertEquals(3,boardHeight);
+        Assertions.assertEquals(3,boardWidth);
     }
 }
