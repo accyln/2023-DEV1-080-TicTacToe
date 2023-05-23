@@ -27,7 +27,7 @@ public class GameMovementRulesTests {
         int rowId=0;
         int colId=0;
 
-        gameService.makeAmove(game,rowId,colId,player1.getSign());
+        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
 
         Assertions.assertEquals('X',game.getBoard()[0][0]);
         Assertions.assertEquals('X',game.getLastPlayedSign());
@@ -44,9 +44,9 @@ public class GameMovementRulesTests {
         int rowId=0;
         int colId=0;
 
-        gameService.makeAmove(game,rowId,colId,player1.getSign());
+        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
 
-        Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game,rowId,colId, player2.getSign()));
+        Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game,rowId,colId, player2.getPlayerSign()));
     }
 
     @Test
@@ -62,9 +62,9 @@ public class GameMovementRulesTests {
         int firstMoveColId=0;
         int secondMoveRowId=0;
         int secondMoveColId=1;
-        gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getSign());
+        gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getPlayerSign());
 
-        Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getSign()));
+        Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getPlayerSign()));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class GameMovementRulesTests {
         int rowId=1;
         int colId=1;
         Game game=gameService.createGame(player1.getId(),player2.getId());
-        gameService.makeAmove(game,rowId,colId,player1.getSign());
+        gameService.makeAmove(game,rowId,colId,player1.getPlayerSign());
 
         Assertions.assertEquals('X',game.getBoard()[rowId][colId]);
     }

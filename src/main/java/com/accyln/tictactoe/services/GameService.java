@@ -13,7 +13,7 @@ public class GameService implements IGameService {
 
     }
     public Player createPlayer(String name, char sign){
-        return new Player(name,sign);
+        return new Player(1l,name,sign);
     }
     public Game createGame(Long player1Id,Long player2Id){
         return new Game(player1Id,player2Id);

@@ -23,11 +23,11 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,0,0, player1.getSign());
-        gameService.makeAmove(game,1,1, player2.getSign());
-        gameService.makeAmove(game,0,1, player1.getSign());
-        gameService.makeAmove(game,2,0, player2.getSign());
-        gameService.makeAmove(game,0,2, player1.getSign());
+        gameService.makeAmove(game,0,0, player1.getPlayerSign());
+        gameService.makeAmove(game,1,1, player2.getPlayerSign());
+        gameService.makeAmove(game,0,1, player1.getPlayerSign());
+        gameService.makeAmove(game,2,0, player2.getPlayerSign());
+        gameService.makeAmove(game,0,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -42,12 +42,12 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,0,0, player1.getSign());
-        gameService.makeAmove(game,0,2, player2.getSign());
-        gameService.makeAmove(game,2,1, player1.getSign());
-        gameService.makeAmove(game,1,1, player2.getSign());
-        gameService.makeAmove(game,1,0, player1.getSign());
-        gameService.makeAmove(game,2,0, player2.getSign());
+        gameService.makeAmove(game,0,0, player1.getPlayerSign());
+        gameService.makeAmove(game,0,2, player2.getPlayerSign());
+        gameService.makeAmove(game,2,1, player1.getPlayerSign());
+        gameService.makeAmove(game,1,1, player2.getPlayerSign());
+        gameService.makeAmove(game,1,0, player1.getPlayerSign());
+        gameService.makeAmove(game,2,0, player2.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('O',game.getWinner());
@@ -61,15 +61,15 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,0,0, player1.getSign());
-        gameService.makeAmove(game,2,0, player2.getSign());
-        gameService.makeAmove(game,1,0, player1.getSign());
-        gameService.makeAmove(game,1,1, player2.getSign());
-        gameService.makeAmove(game,0,2, player1.getSign());
-        gameService.makeAmove(game,0,1, player2.getSign());
-        gameService.makeAmove(game,2,1, player1.getSign());
-        gameService.makeAmove(game,2,2, player2.getSign());
-        gameService.makeAmove(game,1,2, player1.getSign());
+        gameService.makeAmove(game,0,0, player1.getPlayerSign());
+        gameService.makeAmove(game,2,0, player2.getPlayerSign());
+        gameService.makeAmove(game,1,0, player1.getPlayerSign());
+        gameService.makeAmove(game,1,1, player2.getPlayerSign());
+        gameService.makeAmove(game,0,2, player1.getPlayerSign());
+        gameService.makeAmove(game,0,1, player2.getPlayerSign());
+        gameService.makeAmove(game,2,1, player1.getPlayerSign());
+        gameService.makeAmove(game,2,2, player2.getPlayerSign());
+        gameService.makeAmove(game,1,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals(9,game.getMoveCount());
@@ -82,11 +82,11 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,1,0, player1.getSign());
-        gameService.makeAmove(game,0,1, player2.getSign());
-        gameService.makeAmove(game,1,1, player1.getSign());
-        gameService.makeAmove(game,2,0, player2.getSign());
-        gameService.makeAmove(game,1,2, player1.getSign());
+        gameService.makeAmove(game,1,0, player1.getPlayerSign());
+        gameService.makeAmove(game,0,1, player2.getPlayerSign());
+        gameService.makeAmove(game,1,1, player1.getPlayerSign());
+        gameService.makeAmove(game,2,0, player2.getPlayerSign());
+        gameService.makeAmove(game,1,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -101,11 +101,11 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,0,0, player1.getSign());
-        gameService.makeAmove(game,1,1, player2.getSign());
-        gameService.makeAmove(game,1,0, player1.getSign());
-        gameService.makeAmove(game,2,1, player2.getSign());
-        gameService.makeAmove(game,2,0, player1.getSign());
+        gameService.makeAmove(game,0,0, player1.getPlayerSign());
+        gameService.makeAmove(game,1,1, player2.getPlayerSign());
+        gameService.makeAmove(game,1,0, player1.getPlayerSign());
+        gameService.makeAmove(game,2,1, player2.getPlayerSign());
+        gameService.makeAmove(game,2,0, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
@@ -120,11 +120,11 @@ public class GameResultTests {
 
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
-        gameService.makeAmove(game,0,0, player1.getSign());
-        gameService.makeAmove(game,0,1, player2.getSign());
-        gameService.makeAmove(game,1,1, player1.getSign());
-        gameService.makeAmove(game,2,1, player2.getSign());
-        gameService.makeAmove(game,2,2, player1.getSign());
+        gameService.makeAmove(game,0,0, player1.getPlayerSign());
+        gameService.makeAmove(game,0,1, player2.getPlayerSign());
+        gameService.makeAmove(game,1,1, player1.getPlayerSign());
+        gameService.makeAmove(game,2,1, player2.getPlayerSign());
+        gameService.makeAmove(game,2,2, player1.getPlayerSign());
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
