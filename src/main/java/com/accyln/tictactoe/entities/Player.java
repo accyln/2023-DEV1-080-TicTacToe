@@ -1,25 +1,27 @@
 package com.accyln.tictactoe.entities;
 
+import jakarta.persistence.*;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-
+@Entity
 @Table(name = "Player")
 public class Player {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private char sign;
+    @Column(name = "PlayerName")
+    private String playerName;
+    @Column(name = "PlayerSign")
+    private char playerSign;
 
-    public Player(String name,char sign) {
-        this.name=name;
-        this.sign=sign;
+    public Player(String playerName,char playerSign) {
+        this.playerName=playerName;
+        this.playerSign=playerSign;
     }
 
-    public Player(Long id, String name, char sign) {
+    public Player(Long id, String playerName, char playerSign) {
         this.id = id;
-        this.name = name;
-        this.sign = sign;
+        this.playerName = playerName;
+        this.playerSign = playerSign;
     }
 
     public Long getId() {
@@ -31,18 +33,18 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return playerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String naplayerNameme) {
+        this.playerName = playerName;
     }
 
     public char getSign() {
-        return sign;
+        return playerSign;
     }
 
-    public void setSign(char sign) {
-        this.sign = sign;
+    public void setSign(char playerSign) {
+        this.playerSign = playerSign;
     }
 }
