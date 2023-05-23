@@ -1,8 +1,11 @@
 package com.accyln.tictactoe.entities;
 
 
+import org.springframework.data.annotation.Id;
+
 public class Player {
 
+    @Id
     private Long id;
     private String name;
     private char sign;
