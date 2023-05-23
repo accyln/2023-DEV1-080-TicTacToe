@@ -5,13 +5,17 @@ import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import com.accyln.tictactoe.services.GameService;
+import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class GameMovementRulesTests {
+    @Autowired
+    private IGameService gameService;
     @Test
     @DisplayName("Testing that player X makes first move")
     public void assert_that_x_moves_first(){
@@ -23,7 +27,6 @@ public class GameMovementRulesTests {
         int rowId=0;
         int colId=0;
 
-        GameService gameService= new GameService();
         gameService.makeAmove(game,rowId,colId,player1.getSign());
 
         Assertions.assertEquals('X',game.getBoard()[0][0]);
@@ -41,7 +44,6 @@ public class GameMovementRulesTests {
         int rowId=0;
         int colId=0;
 
-        GameService gameService= new GameService();
         gameService.makeAmove(game,rowId,colId,player1.getSign());
 
         Assertions.assertThrows( SquareAlreadyTakenException.class,()->gameService.makeAmove(game,rowId,colId, player2.getSign()));
@@ -60,8 +62,6 @@ public class GameMovementRulesTests {
         int firstMoveColId=0;
         int secondMoveRowId=0;
         int secondMoveColId=1;
-
-        GameService gameService= new GameService();
         gameService.makeAmove(game,firstMoveRowId,firstMoveColId,player1.getSign());
 
         Assertions.assertThrows( SamePlayerCannotSignInSuccesion.class,()->gameService.makeAmove(game,secondMoveRowId,secondMoveColId, player1.getSign()));
@@ -74,7 +74,6 @@ public class GameMovementRulesTests {
         Player player2= new Player('O');
         int rowId=1;
         int colId=1;
-        GameService gameService=new GameService();
         Game game=gameService.createGame(player1.getId(),player2.getId());
         gameService.makeAmove(game,rowId,colId,player1.getSign());
 

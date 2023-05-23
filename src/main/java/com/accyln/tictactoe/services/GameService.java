@@ -5,7 +5,7 @@ import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import org.springframework.stereotype.Service;
 @Service
-public class GameService {
+public class GameService implements IGameService {
 
     public GameService(){
 
