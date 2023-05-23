@@ -1,12 +1,14 @@
 package com.accyln.tictactoe.entities;
 
+import com.accyln.tictactoe.enums.GameStatus;
+
 public class Game {
     private Long id;
     private char[][] board=new char[3][3];
     private Long player1_id;
     private Long player2_id;
     private char lastPlayedSign='O';
-    private String gameStatus="ONGOING";
+    private GameStatus gameStatus= GameStatus.ONGOING;
     private char winner;
     private int moveCount;
 
@@ -53,11 +55,11 @@ public class Game {
         this.lastPlayedSign = lastPlayedSign;
     }
 
-    public String getGameStatus() {
+    public GameStatus getGameStatus() {
         return gameStatus;
     }
 
-    public void setGameStatus(String gameStatus) {
+    public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
     }
 

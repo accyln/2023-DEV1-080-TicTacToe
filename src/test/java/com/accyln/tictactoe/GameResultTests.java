@@ -2,21 +2,25 @@ package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.services.GameService;
+import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class GameResultTests {
+    @Autowired
+    private IGameService gameService;
     @Test
     @DisplayName("Testing that X won the game")
     public void recognise_x_has_won() {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        GameService gameService=new GameService();
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
         gameService.makeAmove(game,0,0, player1.getSign());
@@ -25,7 +29,7 @@ public class GameResultTests {
         gameService.makeAmove(game,2,0, player2.getSign());
         gameService.makeAmove(game,0,2, player1.getSign());
 
-        Assertions.assertEquals("ENDED",game.getGameStatus());
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
 
     }
@@ -36,7 +40,6 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        GameService gameService=new GameService();
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
         gameService.makeAmove(game,0,0, player1.getSign());
@@ -46,7 +49,7 @@ public class GameResultTests {
         gameService.makeAmove(game,1,0, player1.getSign());
         gameService.makeAmove(game,2,0, player2.getSign());
 
-        Assertions.assertEquals("ENDED",game.getGameStatus());
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('O',game.getWinner());
     }
 
@@ -56,7 +59,6 @@ public class GameResultTests {
         Player player1=new Player(1l,"Ahmet",'X');
         Player player2= new Player(2l,"Sarah",'O');
 
-        GameService gameService=new GameService();
         Game game=gameService.createGame(player1.getId(),player2.getId());
 
         gameService.makeAmove(game,0,0, player1.getSign());
@@ -69,7 +71,63 @@ public class GameResultTests {
         gameService.makeAmove(game,2,2, player2.getSign());
         gameService.makeAmove(game,1,2, player1.getSign());
 
-        Assertions.assertEquals("ENDED",game.getGameStatus());
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals(9,game.getMoveCount());
+    }
+    @Test
+    @DisplayName("Testing that one player has won with make a sign three in a row horizontally.")
+    public void recognise_horizontally_won() {
+        Player player1=new Player(1l,"Ahmet",'X');
+        Player player2= new Player(2l,"Sarah",'O');
+
+        Game game=gameService.createGame(player1.getId(),player2.getId());
+
+        gameService.makeAmove(game,1,0, player1.getSign());
+        gameService.makeAmove(game,0,1, player2.getSign());
+        gameService.makeAmove(game,1,1, player1.getSign());
+        gameService.makeAmove(game,2,0, player2.getSign());
+        gameService.makeAmove(game,1,2, player1.getSign());
+
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
+        Assertions.assertEquals('X',game.getWinner());
+
+    }
+
+    @Test
+    @DisplayName("Testing that one player has won with make a sign three in a row vertically.")
+    public void recognise_vertically_won() {
+        Player player1=new Player(1l,"Ahmet",'X');
+        Player player2= new Player(2l,"Sarah",'O');
+
+        Game game=gameService.createGame(player1.getId(),player2.getId());
+
+        gameService.makeAmove(game,0,0, player1.getSign());
+        gameService.makeAmove(game,1,1, player2.getSign());
+        gameService.makeAmove(game,1,0, player1.getSign());
+        gameService.makeAmove(game,2,1, player2.getSign());
+        gameService.makeAmove(game,2,0, player1.getSign());
+
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
+        Assertions.assertEquals('X',game.getWinner());
+
+    }
+
+    @Test
+    @DisplayName("Testing that one player has won with make a sign three in a row diagonally.")
+    public void recognise_diagonally_won() {
+        Player player1=new Player(1l,"Ahmet",'X');
+        Player player2= new Player(2l,"Sarah",'O');
+
+        Game game=gameService.createGame(player1.getId(),player2.getId());
+
+        gameService.makeAmove(game,0,0, player1.getSign());
+        gameService.makeAmove(game,0,1, player2.getSign());
+        gameService.makeAmove(game,1,1, player1.getSign());
+        gameService.makeAmove(game,2,1, player2.getSign());
+        gameService.makeAmove(game,2,2, player1.getSign());
+
+        Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
+        Assertions.assertEquals('X',game.getWinner());
+
     }
 }
