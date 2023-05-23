@@ -1,6 +1,8 @@
 package com.accyln.tictactoe.controller;
 
+import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
 import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
@@ -19,9 +21,30 @@ public class GameController {
         this.gameService = gameService;
     }
 
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * The endpoint for creating a new player
+     *
+     * @param createPlayerRequestDto
+     * @return ResponseEntity<Player>
+     */
     @PostMapping("/newPlayer")
     public ResponseEntity<Player> createPlayer(@RequestBody CreatePlayerRequestDto createPlayerRequestDto){
         return new ResponseEntity<>(gameService.createPlayer(createPlayerRequestDto.getName(), createPlayerRequestDto.getSign()), HttpStatus.CREATED);
+    }
+
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * The endpoint for creating a new game
+     *
+     * @param createGameRequestDto
+     * @return ResponseEntity<Game>
+     */
+    @PostMapping("/newGame")
+    public ResponseEntity<Game> createPlayer(@RequestBody CreateGameRequestDto createGameRequestDto){
+        return new ResponseEntity<>(gameService.createGame(createGameRequestDto.getPlayer1Id(), createGameRequestDto.getPlayer2Id()), HttpStatus.CREATED);
     }
 
 

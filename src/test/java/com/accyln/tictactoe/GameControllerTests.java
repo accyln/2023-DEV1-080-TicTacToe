@@ -1,5 +1,6 @@
 package com.accyln.tictactoe;
 
+import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
 import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
 import com.accyln.tictactoe.controller.GameController;
 import com.accyln.tictactoe.services.GameService;
@@ -35,6 +36,19 @@ public class GameControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/game/newPlayer").accept(MediaType.APPLICATION_JSON)
+                .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+
+    }
+
+    @Test
+    @DisplayName("Testing create a new game api")
+    public void assert_create_game_service() throws Exception{
+        mockMvc = MockMvcBuilders.standaloneSetup(new GameController(gameService)).build();
+        CreateGameRequestDto createGameRequestDto= new CreateGameRequestDto(1l,2l);
+        String request=objectMapper.writeValueAsString(createGameRequestDto);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/game/newGame").accept(MediaType.APPLICATION_JSON)
                 .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
 
     }
