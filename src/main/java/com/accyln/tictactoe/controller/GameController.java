@@ -2,6 +2,7 @@ package com.accyln.tictactoe.controller;
 
 import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
 import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.services.GameService;
@@ -45,6 +46,11 @@ public class GameController {
     @PostMapping("/newGame")
     public ResponseEntity<Game> createPlayer(@RequestBody CreateGameRequestDto createGameRequestDto){
         return new ResponseEntity<>(gameService.createGame(createGameRequestDto.getPlayer1Id(), createGameRequestDto.getPlayer2Id()), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/makeAmove")
+    public ResponseEntity<Game> makeAmove(@RequestBody MakeAMoveRequestDto makeAMoveRequestDto){
+        return new ResponseEntity<>(gameService.makeAmove(makeAMoveRequestDto.getGame(), makeAMoveRequestDto.getRowId(),makeAMoveRequestDto.getColId(),makeAMoveRequestDto.getSign()), HttpStatus.CREATED);
     }
 
 
