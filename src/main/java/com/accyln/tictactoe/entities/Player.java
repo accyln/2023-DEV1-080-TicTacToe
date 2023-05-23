@@ -2,15 +2,17 @@ package com.accyln.tictactoe.entities;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table(name = "Player")
 public class Player {
-
     @Id
     private Long id;
     private String name;
     private char sign;
 
-    public Player(char sign) {
+    public Player(String name,char sign) {
+        this.name=name;
         this.sign=sign;
     }
 

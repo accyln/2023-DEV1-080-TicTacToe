@@ -1,8 +1,17 @@
 package com.accyln.tictactoe.services;
 
 import com.accyln.tictactoe.entities.Game;
+import com.accyln.tictactoe.entities.Player;
 
 public interface IGameService {
+    /**
+     * Create and return a new player
+     * @param name
+     * @param sign
+     * @return Player
+     */
+    Player createPlayer(String name, char sign);
+
     /**
      * Create and return a new game
      * @param player1Id

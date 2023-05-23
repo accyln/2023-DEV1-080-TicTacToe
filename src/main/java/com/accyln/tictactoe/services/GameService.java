@@ -1,6 +1,7 @@
 package com.accyln.tictactoe.services;
 
 import com.accyln.tictactoe.entities.Game;
+import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
@@ -10,6 +11,9 @@ public class GameService implements IGameService {
 
     public GameService(){
 
+    }
+    public Player createPlayer(String name, char sign){
+        return new Player(name,sign);
     }
     public Game createGame(Long player1Id,Long player2Id){
         return new Game(player1Id,player2Id);

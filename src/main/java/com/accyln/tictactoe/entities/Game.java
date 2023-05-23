@@ -1,8 +1,12 @@
 package com.accyln.tictactoe.entities;
 
 import com.accyln.tictactoe.enums.GameStatus;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table(name = "Game")
 public class Game {
+    @Id
     private Long id;
     private char[][] board=new char[3][3];
     private Long player1_id;
