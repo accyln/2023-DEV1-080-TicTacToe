@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "Player")
 @Data
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Player {
@@ -18,10 +17,4 @@ public class Player {
     private String playerName;
     @Column(name = "PlayerSign")
     private char playerSign;
-
-    public Player(String playerName,char playerSign) {
-        this.playerName=playerName;
-        this.playerSign=playerSign;
-    }
-
 }
