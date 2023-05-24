@@ -9,10 +9,9 @@ import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/game")
@@ -59,6 +58,44 @@ public class GameController {
     @PostMapping("/makeAmove")
     public ResponseEntity<Game> makeAmove(@RequestBody MakeAMoveRequestDto makeAMoveRequestDto){
         return new ResponseEntity<>(gameService.makeAmove(makeAMoveRequestDto.getGameId(), makeAMoveRequestDto.getRowId(),makeAMoveRequestDto.getColId(),makeAMoveRequestDto.getSign()), HttpStatus.CREATED);
+    }
+
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * Returns a corresponding player details by playerId
+     *
+     * @param playerId
+     * @return ResponseEntity<Player>
+     */
+    @GetMapping("/getPlayerById")
+    public ResponseEntity<Player> getPlayerById(@RequestParam Long playerId){
+        return new ResponseEntity<>(gameService.getPlayerById(playerId),HttpStatus.OK);
+    }
+
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * Returns a corresponding Game details by gameId
+     *
+     * @param gameId
+     * @return ResponseEntity<Game>
+     */
+    @GetMapping("/getGameById")
+    public ResponseEntity<Game> getGameById(@RequestParam Long gameId){
+        return new ResponseEntity<>(gameService.getGameById(gameId),HttpStatus.OK);
+    }
+
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * Returns all games
+     *
+     * @return ResponseEntity<List<Game>>
+     */
+    @GetMapping("/getAllGames")
+    public ResponseEntity<List<Game>> getAllGames(){
+        return new ResponseEntity<>(gameService.getAllGames(),HttpStatus.OK);
     }
 
 

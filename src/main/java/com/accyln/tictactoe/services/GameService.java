@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class GameService implements IGameService {
 
@@ -58,6 +61,20 @@ public class GameService implements IGameService {
         gameRepository.save(game);
 
         return game;
+    }
+
+    public Player getPlayerById(Long playerId){
+        return playerRepository.findById(playerId).orElseThrow(()-> new NotFoundException("Player not found "+ playerId));
+    }
+
+    public Game getGameById(Long gameId){
+        return gameRepository.findById(gameId).orElseThrow(()-> new NotFoundException("Player not found "+ gameId));
+    }
+
+    public List<Game> getAllGames(){
+        List<Game> result = new ArrayList<Game>();
+        gameRepository.findAll().forEach(result::add);
+        return result;
     }
 
     private char checkWinner(char[][] board) {
