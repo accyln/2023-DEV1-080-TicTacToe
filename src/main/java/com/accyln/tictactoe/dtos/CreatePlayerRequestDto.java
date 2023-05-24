@@ -1,12 +1,10 @@
-package com.accyln.tictactoe.DTOs;
+package com.accyln.tictactoe.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

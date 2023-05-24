@@ -1,11 +1,11 @@
-package com.accyln.tictactoe.DTOs;
+package com.accyln.tictactoe.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
 @AllArgsConstructor
+@Getter
 public class CreatePlayersAndGameRequestDto {
     @NotNull(message = "Player1 cannot be null")
     private CreatePlayerRequestDto player1RequestDto;

@@ -1,9 +1,8 @@
 package com.accyln.tictactoe.controller;
 
-import com.accyln.tictactoe.DTOs.*;
+import com.accyln.tictactoe.dtos.*;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
-import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

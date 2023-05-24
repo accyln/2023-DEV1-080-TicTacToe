@@ -1,8 +1,8 @@
 package com.accyln.tictactoe.services;
 
-import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
-import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
+import com.accyln.tictactoe.dtos.CreatePlayerRequestDto;
+import com.accyln.tictactoe.dtos.CreatePlayersAndGameRequestDto;
+import com.accyln.tictactoe.dtos.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 
