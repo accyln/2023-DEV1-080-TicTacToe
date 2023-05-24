@@ -86,7 +86,6 @@ public class GameControllerTests {
                 .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
 
     }
-
     @Test
     @DisplayName("Testing makeAmove endpoint")
     public void test_makeAmove_endpoint() throws Exception{
@@ -101,9 +100,7 @@ public class GameControllerTests {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/game/makeAmove").accept(MediaType.APPLICATION_JSON)
                 .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
-
     }
-
     @Test
     @DisplayName("Testing getPlayerById endpoint")
     public void test_getPlayerById_endpoint() throws Exception {
@@ -113,7 +110,6 @@ public class GameControllerTests {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
     @Test
     @DisplayName("Testing getGameById endpoint")
     public void test_getGameById_endpoint() throws Exception {
