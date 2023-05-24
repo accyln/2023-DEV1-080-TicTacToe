@@ -1,8 +1,8 @@
 package com.accyln.tictactoe.services;
 
-import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
-import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
+import com.accyln.tictactoe.dtos.CreatePlayerRequestDto;
+import com.accyln.tictactoe.dtos.CreatePlayersAndGameRequestDto;
+import com.accyln.tictactoe.dtos.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
@@ -14,8 +14,6 @@ import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
 import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -25,7 +23,6 @@ import java.util.List;
 
 @Service
 public class GameService implements IGameService {
-    private static final Logger logger = LoggerFactory.getLogger(GameService.class);
     @Autowired
     private IGameRepository gameRepository;
     @Autowired
@@ -102,14 +99,14 @@ public class GameService implements IGameService {
     }
 
     public List<GameDetailsResponseDto> getAllGamesWithDetails(){
-        List<Game> result = new ArrayList<Game>();
+        List<Game> result = new ArrayList<>();
         gameRepository.findAll().forEach(result::add);
 
         List<GameDetailsResponseDto> gameDetailList=new ArrayList<>();
 
         for (Game game:result) {
-            Player player1=playerRepository.findById(game.getPlayer1_id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer1_id()));
-            Player player2=playerRepository.findById(game.getPlayer2_id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer2_id()));
+            Player player1=playerRepository.findById(game.getPlayer1Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer1Id()));
+            Player player2=playerRepository.findById(game.getPlayer2Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer2Id()));
             gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner()));
         }
         return gameDetailList;

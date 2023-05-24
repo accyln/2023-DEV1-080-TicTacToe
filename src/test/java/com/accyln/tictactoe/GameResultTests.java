@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest
-public class GameResultTests {
+class GameResultTests {
     @Autowired
     private IGameService gameService;
     @MockBean
@@ -31,7 +31,7 @@ public class GameResultTests {
     }
     @Test
     @DisplayName("Testing that X won the game")
-    public void recognise_x_has_won() {
+    void recognise_x_has_won() {
         Long gameId=1l;
         Game game=gameService.getGameById(gameId);
 
@@ -47,7 +47,7 @@ public class GameResultTests {
 
     @Test
     @DisplayName("Testing that O won the game")
-    public void recognise_o_has_won() {
+    void recognise_o_has_won() {
         Long gameId=1l;
         Game game=gameService.getGameById(gameId);
 
@@ -64,7 +64,7 @@ public class GameResultTests {
 
     @Test
     @DisplayName("Testing that game finished as draw")
-    public void recognise_drawn() {
+    void recognise_drawn() {
         Long gameId=1l;
         Game game=gameService.getGameById(gameId);
 
@@ -83,7 +83,7 @@ public class GameResultTests {
     }
     @Test
     @DisplayName("Testing that one player has won with make a sign three in a row horizontally.")
-    public void recognise_horizontally_won() {
+    void recognise_horizontally_won() {
         Long gameId=1l;
         Game game=gameService.getGameById(gameId);
 
@@ -99,7 +99,7 @@ public class GameResultTests {
 
     @Test
     @DisplayName("Testing that one player has won with make a sign three in a row vertically.")
-    public void recognise_vertically_won() {
+    void recognise_vertically_won() {
         Game game= gameService.getGameById(1l);
 
         gameService.makeAmove(game.getId(),0,0, 'X');
@@ -114,7 +114,7 @@ public class GameResultTests {
 
     @Test
     @DisplayName("Testing that one player has won with make a sign three in a row diagonally.")
-    public void recognise_diagonally_won() {
+    void recognise_diagonally_won() {
         Long gameId=1l;
         Game game=gameService.getGameById(gameId);
 

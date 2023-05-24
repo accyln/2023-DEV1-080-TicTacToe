@@ -5,10 +5,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "Player")
-@Data
-@Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

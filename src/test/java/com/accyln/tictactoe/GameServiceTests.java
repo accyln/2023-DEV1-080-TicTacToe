@@ -1,8 +1,8 @@
 package com.accyln.tictactoe;
 
-import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
-import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
+import com.accyln.tictactoe.dtos.CreatePlayerRequestDto;
+import com.accyln.tictactoe.dtos.CreatePlayersAndGameRequestDto;
+import com.accyln.tictactoe.dtos.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
@@ -22,7 +22,7 @@ import org.webjars.NotFoundException;
 import java.util.List;
 
 @SpringBootTest
-public class GameServiceTests {
+class GameServiceTests {
     @Autowired
     private IGameService gameService;
     @MockBean
@@ -36,14 +36,14 @@ public class GameServiceTests {
 
     @Test
     @DisplayName("Testing that player created correctly")
-    public void assert_that_player_created_correctly(){
+    void assert_that_player_created_correctly(){
         Player player1 = gameService.createPlayer(new CreatePlayerRequestDto("Can",'X'));
 
         Assertions.assertEquals(1,player1.getId());
     }
     @Test
     @DisplayName("Testing that game board created correctly")
-    public void assert_that_game_board_created_correctly(){
+    void assert_that_game_board_created_correctly(){
         Player player1 = gameService.getPlayerById(1l);
         Player player2= gameService.getPlayerById(2l);
 
@@ -54,7 +54,7 @@ public class GameServiceTests {
 
     @Test
     @DisplayName("Testing that game created correctly")
-    public void assert_that_game_created_correctly(){
+    void assert_that_game_created_correctly(){
         Long playerXId=1l;
         Long playerOId=2l;
 
@@ -63,14 +63,14 @@ public class GameServiceTests {
         int boardHeight=game.getBoard().length;
         int boardWidth=game.getBoard()[0].length;
 
-        Assertions.assertEquals(1L,game.getPlayer1_id());
-        Assertions.assertEquals(2L,game.getPlayer2_id());
+        Assertions.assertEquals(1L,game.getPlayer1Id());
+        Assertions.assertEquals(2L,game.getPlayer2Id());
         Assertions.assertEquals(3,boardHeight);
         Assertions.assertEquals(3,boardWidth);
     }
     @Test
     @DisplayName("Testing getPlayerById service method")
-    public void test_getPlayerById(){
+    void test_getPlayerById(){
         Long playerId=1l;
         Player player=gameService.getPlayerById(playerId);
 
@@ -80,17 +80,17 @@ public class GameServiceTests {
 
     @Test
     @DisplayName("Testing getGameById service method")
-    public void test_getGameById(){
+    void test_getGameById(){
         Long gameId=1l;
         Game returnedGame=gameService.getGameById(gameId);
 
         Assertions.assertEquals(1l,returnedGame.getId());
-        Assertions.assertEquals(2l,returnedGame.getPlayer2_id());
+        Assertions.assertEquals(2l,returnedGame.getPlayer2Id());
     }
 
     @Test
     @DisplayName("Testing getAllGamesWithDetails service method")
-    public void test_getAllGames(){
+    void test_getAllGames(){
         List<GameDetailsResponseDto> gameListResult=gameService.getAllGamesWithDetails();
 
         Assertions.assertEquals(1,gameListResult.size());
@@ -98,13 +98,13 @@ public class GameServiceTests {
 
     @Test
     @DisplayName("Testing gameNotFound exception")
-    public void test_gameNotFound(){
+    void test_gameNotFound(){
         Assertions.assertThrows(NotFoundException.class,()->gameService.getGameById(3l));
     }
 
     @Test
     @DisplayName("Testing mekeAmove service")
-    public void test_makeAmove_service(){
+    void test_makeAmove_service(){
         Game game=gameService.getGameById(1l);
         gameService.makeAmove(game.getId(),0,0,'X');
 
@@ -113,7 +113,7 @@ public class GameServiceTests {
     }
     @Test
     @DisplayName("Testing createPlayersAndGame service")
-    public void test_createPlayersAndGame_service(){
+    void test_createPlayersAndGame_service(){
         Game game=gameService.getGameById(1l);
         CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto=
                 new CreatePlayersAndGameRequestDto(new CreatePlayerRequestDto("Ahmet",'X'),
@@ -122,6 +122,6 @@ public class GameServiceTests {
 
         Assertions.assertEquals(1l,game.getId());
         Assertions.assertEquals(GameStatus.ONGOING,game.getGameStatus());
-        Assertions.assertEquals(1l,game.getPlayer1_id());
+        Assertions.assertEquals(1l,game.getPlayer1Id());
     }
 }

@@ -1,9 +1,9 @@
 package com.accyln.tictactoe;
 
-import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
-import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
+import com.accyln.tictactoe.dtos.CreateGameRequestDto;
+import com.accyln.tictactoe.dtos.CreatePlayerRequestDto;
+import com.accyln.tictactoe.dtos.CreatePlayersAndGameRequestDto;
+import com.accyln.tictactoe.dtos.MakeAMoveRequestDto;
 import com.accyln.tictactoe.controller.GameController;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.testBuilders.TestServiceFactory;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(GameController.class)
-public class GameControllerTests {
+class GameControllerTests {
     @MockBean
     private IGameService gameService;
     @Autowired
@@ -42,7 +42,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing createPlayer endpoint")
-    public void test_createPlayer_endpoint() throws Exception{
+    void test_createPlayer_endpoint() throws Exception{
         CreatePlayerRequestDto createPlayerRequestDto= new CreatePlayerRequestDto("Ahmet",'X');
         String request=objectMapper.writeValueAsString(createPlayerRequestDto);
 
@@ -52,7 +52,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing createGame endpoint")
-    public void test_createGame_endpoint() throws Exception{
+    void test_createGame_endpoint() throws Exception{
         CreateGameRequestDto createGameRequestDto= new CreateGameRequestDto(1l,2l);
         String request=objectMapper.writeValueAsString(createGameRequestDto);
 
@@ -63,7 +63,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing createPlayersAndGame endpoint")
-    public void test_createPlayersAndGame_endpoint() throws Exception{
+    void test_createPlayersAndGame_endpoint() throws Exception{
         CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto=
                 new CreatePlayersAndGameRequestDto(new CreatePlayerRequestDto("Can",'X'),
                                                    new CreatePlayerRequestDto("Sare",'O'));
@@ -76,7 +76,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing makeAmove endpoint")
-    public void test_makeAmove_endpoint() throws Exception{
+    void test_makeAmove_endpoint() throws Exception{
         Long gameId=1l;
         int rowId=0;
         int colId=0;
@@ -91,7 +91,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing getPlayerById endpoint")
-    public void test_getPlayerById_endpoint() throws Exception {
+    void test_getPlayerById_endpoint() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/v1/game/getPlayerById?playerId=1")
                         .accept(MediaType.APPLICATION_JSON))
@@ -100,7 +100,7 @@ public class GameControllerTests {
     }
     @Test
     @DisplayName("Testing getGameById endpoint")
-    public void test_getGameById_endpoint() throws Exception {
+    void test_getGameById_endpoint() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/v1/game/getGameById?gameId=1")
                         .accept(MediaType.APPLICATION_JSON))
@@ -110,7 +110,7 @@ public class GameControllerTests {
 
     @Test
     @DisplayName("Testing getAllGamesWithDetails endpoint")
-    public void test_getAllGamesWithDetails_endpoint() throws Exception {
+    void test_getAllGamesWithDetails_endpoint() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/v1/game/getAllGamesWithDetails")
                         .accept(MediaType.APPLICATION_JSON))
@@ -120,8 +120,8 @@ public class GameControllerTests {
 
     @Test
     @DisplayName("Testing controlled exception")
-    public void test_uncontrolled_generalException_response() throws Exception {
+    void test_uncontrolled_generalException_response() throws Exception {
                 mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/game/makeAmove")
-                .content("wrong request").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isInternalServerError());
+                .content("wrong request").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 }
