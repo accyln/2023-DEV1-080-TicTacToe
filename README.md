@@ -10,4 +10,6 @@ Rules<br />
 -If a player is able to draw three X’s or three O’s in a row, that player wins.<br />
 -If all nine squares are filled and neither player has three in a row, the game is a draw.<br />
 
+![alt text](https://github.com/accyln/2023-DEV1-080-TicTacToe/blob/feature/codeCoverage/ApplicationInfo/backendCodeCoverage.png)
+
 
