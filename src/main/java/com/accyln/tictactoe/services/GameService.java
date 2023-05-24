@@ -7,8 +7,12 @@ import com.accyln.tictactoe.exceptions.GameAlreadyFinishedException;
 import com.accyln.tictactoe.exceptions.InvalidFirstMovingPlayerSignException;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
+import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
+import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -18,14 +22,21 @@ import java.util.List;
 
 @Service
 public class GameService implements IGameService {
-
+    private static final Logger logger = LoggerFactory.getLogger(GameService.class);
     @Autowired
     private IGameRepository gameRepository;
     @Autowired
     private IPlayerRepository playerRepository;
-    public GameService(IGameRepository gameRepository,IPlayerRepository playerRepository){
+    @Autowired
+    private CalculateWinnerHelper calculateWinnerHelper;
+    @Autowired
+    private CheckGameRulesHelper checkGameRulesHelper;
+    public GameService(IGameRepository gameRepository,IPlayerRepository playerRepository,
+                       CalculateWinnerHelper calculateWinnerHelper,CheckGameRulesHelper checkGameRulesHelper){
          this.gameRepository=gameRepository;
          this.playerRepository=playerRepository;
+         this.calculateWinnerHelper=calculateWinnerHelper;
+         this.checkGameRulesHelper=checkGameRulesHelper;
     }
     public Player createPlayer(String name, char sign){
         return playerRepository.save(new Player(name,sign));
@@ -38,28 +49,28 @@ public class GameService implements IGameService {
         Game game=gameRepository.findById(gameId).orElseThrow(()->new NotFoundException("Game not found with id: "+ gameId));
 
         //check game is ongoing
-        if (!game.getGameStatus().equals(GameStatus.ONGOING)) {
+        if (checkGameRulesHelper.isGameFinished(game)) {
             throw new GameAlreadyFinishedException("Game has already finished. You cannot sign.");
         }
         //checking FirstPlayer Sign is X
         if(game.getMoveCount()==0 && sign!='X'){
             throw new InvalidFirstMovingPlayerSignException("First sign must be X");
         }
-        char[][] board= game.getBoard();
-        //checking that played square cannot play twice
-        if(board[rowId][colId]!=0){
+        //checking that played square is empty
+        if(!checkGameRulesHelper.isSquareEmpty(game,rowId,colId)){
             throw new SquareAlreadyTakenException("This square is not null, rowId: "+rowId+ " colId: "+colId);
         }
         //checking that current player sign is not equal to last move
-        if(sign==game.getLastPlayedSign()){
+        if(!checkGameRulesHelper.isThisSignsTurn(game,sign)){
             throw new SamePlayerCannotSignInSuccesion("Cannot make a move with same sign in succession");
         }
 
+        char[][] board= game.getBoard();
         board[rowId][colId]=sign;
         game.setLastPlayedSign(sign);
         game.setMoveCount(game.getMoveCount()+1);
 
-        char winner=checkWinner(board);
+        char winner=calculateWinnerHelper.checkWinner(board);
         if(winner != 0) {
             game.setWinner(winner);
             game.setGameStatus(GameStatus.ENDED);
@@ -72,6 +83,7 @@ public class GameService implements IGameService {
 
         return game;
     }
+
 
     public Player getPlayerById(Long playerId){
         return playerRepository.findById(playerId).orElseThrow(()-> new NotFoundException("Player not found "+ playerId));
@@ -86,23 +98,4 @@ public class GameService implements IGameService {
         gameRepository.findAll().forEach(result::add);
         return result;
     }
-
-    private char checkWinner(char[][] board) {
-        for (int i = 0; i < 3; i++) {
-            if (board[i][0] != ' ' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
-                return board[i][0];
-            }
-            if (board[0][i] != ' ' && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
-                return board[0][i];
-            }
-        }
-        if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return board[0][0];
-        }
-        else if(board[0][2] != ' ' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-            return board[0][2];
-        }
-        else return 0;
-    }
-
 }

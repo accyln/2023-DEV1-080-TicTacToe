@@ -6,6 +6,8 @@ import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
 import com.accyln.tictactoe.controller.GameController;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
+import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
@@ -57,7 +59,9 @@ public class GameControllerTests {
         Mockito.when(mockGameRepository.save(Mockito.any(Game.class))).thenReturn(game);
         Mockito.when(mockGameRepository.findAll()).thenReturn(Arrays.asList(game));
 
-        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+        CalculateWinnerHelper calculateWinnerHelper=new CalculateWinnerHelper();
+        CheckGameRulesHelper checkGameRulesHelper=new CheckGameRulesHelper();
+        gameService=new GameService(mockGameRepository,mockPlayerRepository,calculateWinnerHelper,checkGameRulesHelper);
     }
     @Test
     @DisplayName("Testing createPlayer endpoint")
