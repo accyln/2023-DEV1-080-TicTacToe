@@ -1,5 +1,6 @@
 package com.accyln.tictactoe.services;
 
+import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
@@ -93,9 +94,17 @@ public class GameService implements IGameService {
         return gameRepository.findById(gameId).orElseThrow(()-> new NotFoundException("Player not found "+ gameId));
     }
 
-    public List<Game> getAllGames(){
+    public List<GameDetailsResponseDto> getAllGamesWithDetails(){
         List<Game> result = new ArrayList<Game>();
         gameRepository.findAll().forEach(result::add);
-        return result;
+
+        List<GameDetailsResponseDto> gameDetailList=new ArrayList<>();
+
+        for (Game game:result) {
+            Player player1=playerRepository.findById(game.getPlayer1_id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer1_id()));
+            Player player2=playerRepository.findById(game.getPlayer2_id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer2_id()));
+            gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner()));
+        }
+        return gameDetailList;
     }
 }

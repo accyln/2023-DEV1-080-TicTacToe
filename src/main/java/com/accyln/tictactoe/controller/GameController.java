@@ -2,6 +2,7 @@ package com.accyln.tictactoe.controller;
 
 import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
 import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
@@ -94,9 +95,9 @@ public class GameController {
      *
      * @return ResponseEntity<List<Game>>
      */
-    @GetMapping("/getAllGames")
-    public ResponseEntity<List<Game>> getAllGames(){
-        return new ResponseEntity<>(gameService.getAllGames(),HttpStatus.OK);
+    @GetMapping("/getAllGamesWithDetails")
+    public ResponseEntity<List<GameDetailsResponseDto>> getAllGamesWithDetails(){
+        return new ResponseEntity<>(gameService.getAllGamesWithDetails(),HttpStatus.OK);
     }
 
 

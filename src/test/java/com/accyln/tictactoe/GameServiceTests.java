@@ -1,5 +1,6 @@
 package com.accyln.tictactoe;
 
+import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
@@ -107,7 +108,7 @@ public class GameServiceTests {
     @Test
     @DisplayName("Testing getAllGames service method")
     public void test_getAllGames(){
-        List<Game> gameListResult=gameService.getAllGames();
+        List<GameDetailsResponseDto> gameListResult=gameService.getAllGamesWithDetails();
 
         Assertions.assertEquals(1,gameListResult.size());
     }

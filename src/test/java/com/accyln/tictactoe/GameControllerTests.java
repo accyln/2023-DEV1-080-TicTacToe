@@ -121,10 +121,10 @@ public class GameControllerTests {
     }
 
     @Test
-    @DisplayName("Testing getAllGames endpoint")
-    public void test_getAllGames_endpoint() throws Exception {
+    @DisplayName("Testing getAllGamesWithDetails endpoint")
+    public void test_getAllGamesWithDetails_endpoint() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/v1/game/getAllGames")
+                        .get("/api/v1/game/getAllGamesWithDetails")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
