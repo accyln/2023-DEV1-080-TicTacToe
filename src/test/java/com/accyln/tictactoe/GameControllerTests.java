@@ -2,32 +2,24 @@ package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
 import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
 import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
 import com.accyln.tictactoe.controller.GameController;
 import com.accyln.tictactoe.entities.Game;
-import com.accyln.tictactoe.entities.Player;
-import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
-import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
-import com.accyln.tictactoe.mockServices.MockServiceFactory;
+import com.accyln.tictactoe.testBuilders.TestServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
-import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +38,7 @@ public class GameControllerTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        gameService= MockServiceFactory.getMockGameService();
+        gameService= TestServiceFactory.getGameService();
     }
     @Test
     @DisplayName("Testing createPlayer endpoint")
@@ -57,9 +49,7 @@ public class GameControllerTests {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/game/newPlayer").accept(MediaType.APPLICATION_JSON)
                 .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
-
     }
-
     @Test
     @DisplayName("Testing createGame endpoint")
     public void test_createGame_endpoint() throws Exception{
@@ -68,6 +58,19 @@ public class GameControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/game/newGame").accept(MediaType.APPLICATION_JSON)
+                .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
+
+    }
+    @Test
+    @DisplayName("Testing createPlayersAndGame endpoint")
+    public void test_createPlayersAndGame_endpoint() throws Exception{
+        CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto=
+                new CreatePlayersAndGameRequestDto(new CreatePlayerRequestDto("Can",'X'),
+                                                   new CreatePlayerRequestDto("Sare",'O'));
+        String request=objectMapper.writeValueAsString(createPlayersAndGameRequestDto);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/game/createPlayersAndGame").accept(MediaType.APPLICATION_JSON)
                 .content(request).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
 
     }

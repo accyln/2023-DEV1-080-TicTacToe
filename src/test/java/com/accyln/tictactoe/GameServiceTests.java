@@ -1,29 +1,25 @@
 package com.accyln.tictactoe;
 
+import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
 import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
-import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
-import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
-import com.accyln.tictactoe.mockServices.MockServiceFactory;
+import com.accyln.tictactoe.enums.GameStatus;
+import com.accyln.tictactoe.testBuilders.TestServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
-import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.webjars.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 public class GameServiceTests {
@@ -35,13 +31,13 @@ public class GameServiceTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        gameService= MockServiceFactory.getMockGameService();
+        gameService= TestServiceFactory.getGameService();
     }
 
     @Test
     @DisplayName("Testing that player created correctly")
     public void assert_that_player_created_correctly(){
-        Player player1 = gameService.createPlayer("Can",'X');
+        Player player1 = gameService.createPlayer(new CreatePlayerRequestDto("Can",'X'));
 
         Assertions.assertEquals(1,player1.getId());
     }
@@ -114,6 +110,18 @@ public class GameServiceTests {
 
         Assertions.assertEquals('X',game.getBoard()[0][0]);
         Assertions.assertEquals(1,game.getMoveCount());
+    }
+    @Test
+    @DisplayName("Testing createPlayersAndGame service")
+    public void test_createPlayersAndGame_service(){
+        Game game=gameService.getGameById(1l);
+        CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto=
+                new CreatePlayersAndGameRequestDto(new CreatePlayerRequestDto("Ahmet",'X'),
+                        new CreatePlayerRequestDto("Sare",'O'));
+        gameService.createPlayersAndGame(createPlayersAndGameRequestDto);
 
+        Assertions.assertEquals(1l,game.getId());
+        Assertions.assertEquals(GameStatus.ONGOING,game.getGameStatus());
+        Assertions.assertEquals(1l,game.getPlayer1_id());
     }
 }

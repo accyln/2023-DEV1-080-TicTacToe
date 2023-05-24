@@ -1,5 +1,7 @@
 package com.accyln.tictactoe.services;
 
+import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
 import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
@@ -9,11 +11,10 @@ import java.util.List;
 public interface IGameService {
     /**
      * Create and return a new player
-     * @param name
-     * @param sign
+     * @param createPlayerRequestDto
      * @return Player
      */
-    Player createPlayer(String name, char sign);
+    Player createPlayer(CreatePlayerRequestDto createPlayerRequestDto);
 
     /**
      * Create and return a new game
@@ -22,6 +23,13 @@ public interface IGameService {
      * @return Game
      */
     Game createGame(Long player1Id,Long player2Id);
+
+    /**
+     * Create players and a game
+     * @param createPlayersAndGameRequestDto
+     * @return Game
+     */
+    Game createPlayersAndGame(CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto);
 
     /**
      * Making a move and sign on the board

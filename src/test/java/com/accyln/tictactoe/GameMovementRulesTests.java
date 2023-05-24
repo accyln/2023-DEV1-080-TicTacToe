@@ -1,30 +1,21 @@
 package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
-import com.accyln.tictactoe.entities.Player;
-import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.exceptions.GameAlreadyFinishedException;
 import com.accyln.tictactoe.exceptions.InvalidFirstMovingPlayerSignException;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
-import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
-import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
-import com.accyln.tictactoe.mockServices.MockServiceFactory;
+import com.accyln.tictactoe.testBuilders.TestServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
-import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.webjars.NotFoundException;
-
-import java.util.Optional;
 
 @SpringBootTest
 public class GameMovementRulesTests {
@@ -36,7 +27,7 @@ public class GameMovementRulesTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        gameService= MockServiceFactory.getMockGameService();
+        gameService= TestServiceFactory.getGameService();
     }
     @Test
     @DisplayName("Testing that player X makes first move")

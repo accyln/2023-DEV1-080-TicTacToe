@@ -1,9 +1,6 @@
 package com.accyln.tictactoe.controller;
 
-import com.accyln.tictactoe.DTOs.CreateGameRequestDto;
-import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
-import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
-import com.accyln.tictactoe.DTOs.MakeAMoveRequestDto;
+import com.accyln.tictactoe.DTOs.*;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.services.GameService;
@@ -32,7 +29,7 @@ public class GameController {
      */
     @PostMapping("/newPlayer")
     public ResponseEntity<Player> createPlayer(@RequestBody CreatePlayerRequestDto createPlayerRequestDto){
-        return new ResponseEntity<>(gameService.createPlayer(createPlayerRequestDto.getName(), createPlayerRequestDto.getSign()), HttpStatus.CREATED);
+        return new ResponseEntity<>(gameService.createPlayer(createPlayerRequestDto), HttpStatus.CREATED);
     }
 
     /**
@@ -48,6 +45,18 @@ public class GameController {
         return new ResponseEntity<>(gameService.createGame(createGameRequestDto.getPlayer1Id(), createGameRequestDto.getPlayer2Id()), HttpStatus.CREATED);
     }
 
+    /**
+     * @author Ahmet Can Ceylan
+     *
+     * The endpoint for creating a new game
+     *
+     * @param createPlayersAndGameRequestDto
+     * @return ResponseEntity<Game>
+     */
+    @PostMapping("/createPlayersAndGame")
+    public ResponseEntity<Game> createPlayersAndGame(@RequestBody CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto) {
+        return new ResponseEntity<>(gameService.createPlayersAndGame(createPlayersAndGameRequestDto), HttpStatus.CREATED);
+    }
     /**
      * @author Ahmet Can Ceylan
      *
@@ -91,14 +100,12 @@ public class GameController {
     /**
      * @author Ahmet Can Ceylan
      *
-     * Returns all games
+     * Returns all games with details
      *
-     * @return ResponseEntity<List<Game>>
+     * @return ResponseEntity<List<GameDetailsResponseDto>>
      */
     @GetMapping("/getAllGamesWithDetails")
     public ResponseEntity<List<GameDetailsResponseDto>> getAllGamesWithDetails(){
         return new ResponseEntity<>(gameService.getAllGamesWithDetails(),HttpStatus.OK);
     }
-
-
 }
