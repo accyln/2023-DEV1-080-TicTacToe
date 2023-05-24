@@ -1,7 +1,11 @@
 package com.accyln.tictactoe;
 
+import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
+import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
+import com.accyln.tictactoe.mockServices.MockServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
@@ -14,6 +18,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,19 +35,7 @@ public class GameServiceTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        Player player1 = new Player(1l,"Can",'X');
-        Player player2= new Player(2l,"Sarah",'O');
-        Mockito.when(mockPlayerRepository.findById(1l)).thenReturn(Optional.of(player1));
-        Mockito.when(mockPlayerRepository.findById(2l)).thenReturn(Optional.of(player2));
-        Mockito.when(mockPlayerRepository.save(Mockito.any(Player.class))).thenReturn(player1);
-
-        Game game=new Game(player1.getId(),player2.getId());
-        game.setId(1l);
-        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
-        Mockito.when(mockGameRepository.save(Mockito.any(Game.class))).thenReturn(game);
-        Mockito.when(mockGameRepository.findAll()).thenReturn(Arrays.asList(game));
-
-        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+        gameService= MockServiceFactory.getMockGameService();
     }
 
     @Test
@@ -100,10 +93,27 @@ public class GameServiceTests {
     }
 
     @Test
-    @DisplayName("Testing getAllGames service method")
+    @DisplayName("Testing getAllGamesWithDetails service method")
     public void test_getAllGames(){
-        List<Game> gameListResult=gameService.getAllGames();
+        List<GameDetailsResponseDto> gameListResult=gameService.getAllGamesWithDetails();
 
         Assertions.assertEquals(1,gameListResult.size());
+    }
+
+    @Test
+    @DisplayName("Testing gameNotFound exception")
+    public void test_gameNotFound(){
+        Assertions.assertThrows(NotFoundException.class,()->gameService.getGameById(3l));
+    }
+
+    @Test
+    @DisplayName("Testing mekeAmove service")
+    public void test_makeAmove_service(){
+        Game game=gameService.getGameById(1l);
+        gameService.makeAmove(game.getId(),0,0,'X');
+
+        Assertions.assertEquals('X',game.getBoard()[0][0]);
+        Assertions.assertEquals(1,game.getMoveCount());
+
     }
 }

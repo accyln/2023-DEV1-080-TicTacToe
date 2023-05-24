@@ -1,4 +1,9 @@
 package com.accyln.tictactoe.exceptions;
 
-public class GameAlreadyFinishedException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class GameAlreadyFinishedException extends BaseRuntimeException {
+    public GameAlreadyFinishedException(String message){
+        super(message, HttpStatus.BAD_REQUEST);
+    }
 }

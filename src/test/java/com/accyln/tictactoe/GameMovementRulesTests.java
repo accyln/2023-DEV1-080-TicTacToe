@@ -7,6 +7,9 @@ import com.accyln.tictactoe.exceptions.GameAlreadyFinishedException;
 import com.accyln.tictactoe.exceptions.InvalidFirstMovingPlayerSignException;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
+import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
+import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
+import com.accyln.tictactoe.mockServices.MockServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
@@ -33,17 +36,7 @@ public class GameMovementRulesTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        Player player1 = new Player(1l,"Can",'X');
-        Player player2= new Player(2l,"Sarah",'O');
-        Mockito.when(mockPlayerRepository.findById(1l)).thenReturn(Optional.of(player1));
-        Mockito.when(mockPlayerRepository.findById(2l)).thenReturn(Optional.of(player2));
-
-        Game game=new Game(player1.getId(),player2.getId());
-        game.setId(1l);
-        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
-
-        gameService=new GameService(mockGameRepository,mockPlayerRepository);
-
+        gameService= MockServiceFactory.getMockGameService();
     }
     @Test
     @DisplayName("Testing that player X makes first move")

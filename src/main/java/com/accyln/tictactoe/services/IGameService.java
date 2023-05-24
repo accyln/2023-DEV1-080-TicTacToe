@@ -1,5 +1,6 @@
 package com.accyln.tictactoe.services;
 
+import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 
@@ -47,9 +48,9 @@ public interface IGameService {
     Game getGameById(Long gameId);
 
     /**
-     * Returns all games
-     * @return List<Game>
+     * Returns all games with player details
+     * @return List<GameDetailsResponseDto>
      */
-    List<Game> getAllGames();
+    List<GameDetailsResponseDto> getAllGamesWithDetails();
 
 }

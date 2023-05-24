@@ -1,4 +1,9 @@
 package com.accyln.tictactoe.exceptions;
 
-public class InvalidFirstMovingPlayerSignException extends RuntimeException{
+import org.springframework.http.HttpStatus;
+
+public class InvalidFirstMovingPlayerSignException extends BaseRuntimeException {
+    public InvalidFirstMovingPlayerSignException(String message){
+        super(message, HttpStatus.BAD_REQUEST);
+    }
 }

@@ -3,6 +3,9 @@ package com.accyln.tictactoe;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
+import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
+import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
+import com.accyln.tictactoe.mockServices.MockServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
 import com.accyln.tictactoe.services.GameService;
@@ -31,17 +34,7 @@ public class GameResultTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        Player player1 = new Player(1l,"Can",'X');
-        Player player2= new Player(2l,"Sarah",'O');
-        Mockito.when(mockPlayerRepository.findById(1l)).thenReturn(Optional.of(player1));
-        Mockito.when(mockPlayerRepository.findById(2l)).thenReturn(Optional.of(player2));
-
-        Game game=new Game(player1.getId(),player2.getId());
-        game.setId(1l);
-        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
-
-        gameService=new GameService(mockGameRepository,mockPlayerRepository);
-
+        gameService= MockServiceFactory.getMockGameService();
     }
     @Test
     @DisplayName("Testing that X won the game")
@@ -116,14 +109,7 @@ public class GameResultTests {
     @Test
     @DisplayName("Testing that one player has won with make a sign three in a row vertically.")
     public void recognise_vertically_won() {
-        Player player1=new Player(1l,"Ahmet",'X');
-        Player player2= new Player(2l,"Sarah",'O');
-
-        Game game=new Game(player1.getId(),player2.getId());
-        game.setId(1l);
-
-        Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
-        gameService=new GameService(mockGameRepository,mockPlayerRepository);
+        Game game= gameService.getGameById(1l);
 
         gameService.makeAmove(game.getId(),0,0, 'X');
         gameService.makeAmove(game.getId(),1,1, 'O');
