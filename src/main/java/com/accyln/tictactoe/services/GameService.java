@@ -3,6 +3,7 @@ package com.accyln.tictactoe.services;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
+import com.accyln.tictactoe.exceptions.InvalidFirstMovingPlayerSignException;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
 import com.accyln.tictactoe.repositories.IGameRepository;
@@ -34,6 +35,10 @@ public class GameService implements IGameService {
 
     public Game makeAmove(Long gameId, int rowId, int colId, char sign){
         Game game=gameRepository.findById(gameId).orElseThrow(()->new NotFoundException("Game not found with id: "+ gameId));
+        //checkingFirstPlayerSignX
+        if(game.getMoveCount()==0 && sign!='X'){
+            throw new InvalidFirstMovingPlayerSignException();
+        }
         char[][] board= game.getBoard();
         //checking that played square cannot play twice
         if(board[rowId][colId]!=0){
