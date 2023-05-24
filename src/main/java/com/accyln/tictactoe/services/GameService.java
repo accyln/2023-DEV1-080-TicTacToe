@@ -1,5 +1,7 @@
 package com.accyln.tictactoe.services;
 
+import com.accyln.tictactoe.DTOs.CreatePlayerRequestDto;
+import com.accyln.tictactoe.DTOs.CreatePlayersAndGameRequestDto;
 import com.accyln.tictactoe.DTOs.GameDetailsResponseDto;
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
@@ -39,11 +41,16 @@ public class GameService implements IGameService {
          this.calculateWinnerHelper=calculateWinnerHelper;
          this.checkGameRulesHelper=checkGameRulesHelper;
     }
-    public Player createPlayer(String name, char sign){
-        return playerRepository.save(new Player(name,sign));
+    public Player createPlayer(CreatePlayerRequestDto createPlayerRequestDto){
+        return playerRepository.save(new Player(createPlayerRequestDto.getName(),createPlayerRequestDto.getSign()));
     }
     public Game createGame(Long player1Id,Long player2Id){
         return gameRepository.save(new Game(player1Id,player2Id));
+    }
+    public Game createPlayersAndGame(CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto){
+        Player player1=createPlayer(createPlayersAndGameRequestDto.getPlayer1RequestDto());
+        Player player2=createPlayer(createPlayersAndGameRequestDto.getPlayer2RequestDto());
+        return gameRepository.save(new Game(player1.getId(),player2.getId()));
     }
 
     public Game makeAmove(Long gameId, int rowId, int colId, char sign){

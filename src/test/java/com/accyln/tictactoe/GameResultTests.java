@@ -1,25 +1,18 @@
 package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
-import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
-import com.accyln.tictactoe.helpers.CalculateWinnerHelper;
-import com.accyln.tictactoe.helpers.CheckGameRulesHelper;
-import com.accyln.tictactoe.mockServices.MockServiceFactory;
+import com.accyln.tictactoe.testBuilders.TestServiceFactory;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import com.accyln.tictactoe.repositories.IPlayerRepository;
-import com.accyln.tictactoe.services.GameService;
 import com.accyln.tictactoe.services.IGameService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -34,7 +27,7 @@ public class GameResultTests {
     private IPlayerRepository mockPlayerRepository;
     @BeforeEach
     void setup(){
-        gameService= MockServiceFactory.getMockGameService();
+        gameService= TestServiceFactory.getGameService();
     }
     @Test
     @DisplayName("Testing that X won the game")
@@ -50,7 +43,6 @@ public class GameResultTests {
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
-
     }
 
     @Test
@@ -103,7 +95,6 @@ public class GameResultTests {
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
-
     }
 
     @Test
@@ -119,7 +110,6 @@ public class GameResultTests {
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
-
     }
 
     @Test
@@ -136,6 +126,5 @@ public class GameResultTests {
 
         Assertions.assertEquals(GameStatus.ENDED,game.getGameStatus());
         Assertions.assertEquals('X',game.getWinner());
-
     }
 }
