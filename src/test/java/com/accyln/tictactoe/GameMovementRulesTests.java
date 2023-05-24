@@ -41,9 +41,7 @@ public class GameMovementRulesTests {
         Game game=new Game(player1.getId(),player2.getId());
         game.setId(1l);
         Mockito.when(mockGameRepository.findById(1l)).thenReturn(Optional.of(game));
-
         gameService=new GameService(mockGameRepository,mockPlayerRepository);
-
     }
     @Test
     @DisplayName("Testing that player X makes first move")

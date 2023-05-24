@@ -39,20 +39,20 @@ public class GameService implements IGameService {
 
         //check game is ongoing
         if (!game.getGameStatus().equals(GameStatus.ONGOING)) {
-            throw new GameAlreadyFinishedException();
+            throw new GameAlreadyFinishedException("Game has already finished. You cannot sign.");
         }
         //checking FirstPlayer Sign is X
         if(game.getMoveCount()==0 && sign!='X'){
-            throw new InvalidFirstMovingPlayerSignException();
+            throw new InvalidFirstMovingPlayerSignException("First sign must be X");
         }
         char[][] board= game.getBoard();
         //checking that played square cannot play twice
         if(board[rowId][colId]!=0){
-            throw new SquareAlreadyTakenException();
+            throw new SquareAlreadyTakenException("This square is not null, rowId: "+rowId+ " colId: "+colId);
         }
         //checking that current player sign is not equal to last move
         if(sign==game.getLastPlayedSign()){
-            throw new SamePlayerCannotSignInSuccesion();
+            throw new SamePlayerCannotSignInSuccesion("Cannot make a move with same sign in succession");
         }
 
         board[rowId][colId]=sign;
@@ -68,7 +68,6 @@ public class GameService implements IGameService {
         if (game.getMoveCount()==9){
             game.setGameStatus(GameStatus.ENDED);
         }
-
         gameRepository.save(game);
 
         return game;

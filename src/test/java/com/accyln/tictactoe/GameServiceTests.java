@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,5 +106,11 @@ public class GameServiceTests {
         List<Game> gameListResult=gameService.getAllGames();
 
         Assertions.assertEquals(1,gameListResult.size());
+    }
+
+    @Test
+    @DisplayName("Testing getAllGames service method")
+    public void test_gameNotFound(){
+        Assertions.assertThrows(NotFoundException.class,()->gameService.getGameById(3l));
     }
 }
