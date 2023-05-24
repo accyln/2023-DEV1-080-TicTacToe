@@ -2,6 +2,8 @@ package com.accyln.tictactoe;
 
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.enums.GameStatus;
+import com.accyln.tictactoe.exceptions.GameAlreadyFinishedException;
 import com.accyln.tictactoe.exceptions.InvalidFirstMovingPlayerSignException;
 import com.accyln.tictactoe.exceptions.SamePlayerCannotSignInSuccesion;
 import com.accyln.tictactoe.exceptions.SquareAlreadyTakenException;
@@ -109,5 +111,20 @@ public class GameMovementRulesTests {
         gameService.makeAmove(game.getId(),rowId,colId,'X');//making a move
 
         Assertions.assertEquals('X',game.getBoard()[rowId][colId]);//assert that right square signed
+    }
+
+    @Test
+    @DisplayName("Testing that cannot make a move after game finished")
+    public void assert_cannot_make_a_move_after_game_finished(){
+        Long gameId=1l;
+        Game game=gameService.getGameById(gameId);
+
+        gameService.makeAmove(game.getId(),0,0, 'X');
+        gameService.makeAmove(game.getId(),1,1, 'O');
+        gameService.makeAmove(game.getId(),0,1, 'X');
+        gameService.makeAmove(game.getId(),2,0, 'O');
+        gameService.makeAmove(game.getId(),0,2, 'X');
+
+        Assertions.assertThrows(GameAlreadyFinishedException.class,()->gameService.makeAmove(game.getId(),2,2, 'O'));
     }
 }
