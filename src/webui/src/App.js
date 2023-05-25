@@ -4,6 +4,7 @@ import './App.css';
 import Layout from './common/Layout';
 import { Game } from './components/Game';
 import { Home } from './components/Home';
+import { GameHistory } from './components/GameHistory';
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/Game/:gameId' element={<Game/>} />
+        <Route path='/GameHistory' element={<GameHistory/>} />
         </Routes>
 
        

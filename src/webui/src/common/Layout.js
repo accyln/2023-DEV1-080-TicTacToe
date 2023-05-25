@@ -11,17 +11,13 @@ const Wrapper = styled.div`
         width: 100%;
         flex: auto;
         flex-direction: column;
-        
     }
 `;
 const Main = styled.main`
     position: fixed;
     top: 80px;
     width: 100%;
-
-    
 `;
-
 const Layout = ({ children }) => {
     return (
     <React.Fragment>
