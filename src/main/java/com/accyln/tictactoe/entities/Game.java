@@ -8,6 +8,7 @@ import lombok.*;
 @Table(name = "Game")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

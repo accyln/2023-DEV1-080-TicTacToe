@@ -45,8 +45,8 @@ public class GameService implements IGameService {
         return gameRepository.save(new Game(player1Id,player2Id));
     }
     public Game createPlayersAndGame(CreatePlayersAndGameRequestDto createPlayersAndGameRequestDto){
-        Player player1=createPlayer(createPlayersAndGameRequestDto.getPlayer1RequestDto());
-        Player player2=createPlayer(createPlayersAndGameRequestDto.getPlayer2RequestDto());
+        Player player1=createPlayer(createPlayersAndGameRequestDto.getPlayer1());
+        Player player2=createPlayer(createPlayersAndGameRequestDto.getPlayer2());
         return gameRepository.save(new Game(player1.getId(),player2.getId()));
     }
 

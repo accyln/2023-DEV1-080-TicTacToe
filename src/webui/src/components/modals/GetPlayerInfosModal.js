@@ -26,14 +26,14 @@ export function GetPlayerInfosModal(props){
                 <Row style={{ marginLeft: 3 }}>
                     <Col sm={11}>
                         <Row>
-                    <Form.Label>Player1 Name <span style={{ color: "red" }}>*</span></Form.Label>
+                    <Form.Label>Player X Name <span style={{ color: "red" }}>*</span></Form.Label>
                         <div>
                             <textarea className="form-control" id="player1Name" rows="1" value={player1Name} onChange={(e)=>setPlayer1Name(e.target.value)}></textarea>
                         </div>
                         </Row>
                         <br></br>
                         <Row>
-                        <Form.Label>Player2 Name <span style={{ color: "red" }}>*</span></Form.Label>
+                        <Form.Label>Player O Name <span style={{ color: "red" }}>*</span></Form.Label>
                         <div>
                             <textarea className="form-control" id="player2Name" rows="1" value={player2Name} onChange={(e)=>setPlayer2Name(e.target.value)}></textarea>
                         </div>
