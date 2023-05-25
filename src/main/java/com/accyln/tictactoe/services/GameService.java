@@ -55,15 +55,15 @@ public class GameService implements IGameService {
 
         //check game is ongoing
         if (checkGameRulesHelper.isGameFinished(game)) {
-            throw new GameAlreadyFinishedException("Game has already finished. You cannot sign.");
+            throw new GameAlreadyFinishedException("Game has already finished. You cannot make a move.");
         }
         //checking FirstPlayer Sign is X
         if(game.getMoveCount()==0 && sign!='X'){
-            throw new InvalidFirstMovingPlayerSignException("First sign must be X");
+            throw new InvalidFirstMovingPlayerSignException("First playing sign must be X");
         }
         //checking that played square is empty
         if(!checkGameRulesHelper.isSquareEmpty(game,rowId,colId)){
-            throw new SquareAlreadyTakenException("This square is not empty, cannot sign!!!  rowId: "+rowId+ " colId: "+colId);
+            throw new SquareAlreadyTakenException("This square is not empty, cannot sign!  (rowId: "+rowId+ " colId: "+colId+")");
         }
         //checking that current player sign is not equal to last move
         if(!checkGameRulesHelper.isThisSignsTurn(game,sign)){
