@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Card, Row, Col, Button } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { GetSecureBase } from "../common/basepages/RequestHandler";
 
 
 
@@ -20,10 +21,9 @@ export function GameHistory(props) {
 
 
     function getGameList() {
-        fetch(
-            "http://localhost:8080/api/v1/game/getAllGamesWithDetails"
-        ).then(response => response.json())
-            .then((data) => {
+        GetSecureBase(
+            "api/v1/game/getAllGamesWithDetails"
+        ).then((data) => {
                 if (data) {
                     setGameList(data);
                     setLoading(false);

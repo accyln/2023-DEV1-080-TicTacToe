@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingOverlay from 'react-loading-overlay-ts';
+import { GetSecureBase,PostSecureBase } from "../common/basepages/RequestHandler";
 
 
 export function Game(props) {
@@ -17,10 +18,9 @@ export function Game(props) {
     }, []);
 
     function getgameInfo() {
-        fetch(
-            "http://localhost:8080/api/v1/game/getGameById?gameId=" + propsVariables.gameId
-        ).then(response => response.json())
-            .then((data) => {
+        GetSecureBase(
+            "api/v1/game/getGameById?gameId="+propsVariables.gameId
+          ).then((data) => {
                 if (data) {
                     setGame(data);
                     setLoading(false);
@@ -80,17 +80,9 @@ export function Game(props) {
             sign: sign
         }
 
-        var header = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        };
-
-        fetch("http://localhost:8080/api/v1/game/makeAmove", {
-            method: 'POST',
-            headers: header,
-            body: JSON.stringify(requestBody)
-        }).then(response => response.json())
-            .then((data) => {
+        PostSecureBase(
+            "api/v1/game/makeAmove", requestBody
+          ).then((data) => {
                 if (data) {
                     setGame(data);
                 }

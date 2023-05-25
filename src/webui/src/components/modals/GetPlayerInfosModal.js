@@ -7,7 +7,9 @@ export function GetPlayerInfosModal(props){
     const [player2Name, setPlayer2Name] = useState(null);
 
     function startGame(){
-       props.callback(player1Name,player2Name);
+        if(player1Name && player2Name){
+          props.callback(player1Name,player2Name);
+        } else alert("Please enter all player names.")
     }
 
     return (

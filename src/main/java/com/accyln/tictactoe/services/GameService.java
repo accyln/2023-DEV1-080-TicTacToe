@@ -63,7 +63,7 @@ public class GameService implements IGameService {
         }
         //checking that played square is empty
         if(!checkGameRulesHelper.isSquareEmpty(game,rowId,colId)){
-            throw new SquareAlreadyTakenException("This square is not null, rowId: "+rowId+ " colId: "+colId);
+            throw new SquareAlreadyTakenException("This square is not empty, cannot sign!!!  rowId: "+rowId+ " colId: "+colId);
         }
         //checking that current player sign is not equal to last move
         if(!checkGameRulesHelper.isThisSignsTurn(game,sign)){

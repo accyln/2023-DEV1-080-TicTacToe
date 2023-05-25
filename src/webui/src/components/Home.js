@@ -1,8 +1,8 @@
 import React, { Component, useState } from "react";
 import { Row, Col, Button, Form } from 'react-bootstrap'
-import { useEffect } from "react";
 import { GetPlayerInfosModal } from "./modals/GetPlayerInfosModal";
 import { useNavigate } from "react-router-dom";
+import { PostSecureBase } from "../common/basepages/RequestHandler";
 
 
 export function Home(props) {
@@ -23,16 +23,7 @@ export function Home(props) {
             }
         };
 
-        var header = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        };
-
-        fetch("http://localhost:8080/api/v1/game/createPlayersAndGame", {
-            method: 'POST',
-            headers: header,
-            body: JSON.stringify(requestBody)
-        }).then(response => response.json())
+        PostSecureBase("api/v1/game/createPlayersAndGame",requestBody)
             .then((data) => {
                 if (data) {
                     navigate("/Game/" + data.id)
