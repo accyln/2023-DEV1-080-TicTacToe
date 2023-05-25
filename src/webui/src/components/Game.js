@@ -1,15 +1,27 @@
 import React,{ useEffect, useState } from "react";
-import { Row, Col,Button} from 'react-bootstrap'
+import { Row, Col,Button} from 'react-bootstrap';
+import {useParams} from "react-router-dom";
 
 
 export function Game(props){
 
     const [game,setGame]=useState([[]]);
 
+    const propsVariables=useParams();
+
     useEffect(()=>{
-        debugger;
-       console.log("test"+game);
+        getgameInfo();
     },[]);
+
+    function getgameInfo() {
+        fetch(
+          "http://localhost:8080/api/v1/game/getGameById?gameId="+propsVariables.gameId
+        ).then((data) => {
+          if (data) {
+            setGame(data);
+          }
+        });
+      }
 
     const renderSquare = (index,sign) => {
         return (
