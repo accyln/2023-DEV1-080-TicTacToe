@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  tictactoe:
+    ports:
+      - "35284:80"
+
+
+  webui:
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
