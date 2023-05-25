@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from "react";
-import { Row, Col,Button} from 'react-bootstrap';
-import {useParams} from "react-router-dom";
+import { Row, Col,Button,Form} from 'react-bootstrap';
+import {useParams,useNavigate} from "react-router-dom";
 
 
 export function Game(props){
@@ -8,6 +8,7 @@ export function Game(props){
     const [game,setGame]=useState([[]]);
 
     const propsVariables=useParams();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         getgameInfo();
@@ -109,6 +110,12 @@ export function Game(props){
         );
       }
 
+    function handleGameFinished(){
+        setGame(null);
+        navigate("/");
+
+      }
+
     return(
     <div className="game">
         <Row>
@@ -135,6 +142,24 @@ export function Game(props){
         {renderSquare(8,game?.board?.[2]?.[2])}
       </div>
        </>):(null)}
+
+       <br></br>
+      {game?.gameStatus=="ENDED" && (game?.winner=="X" || game?.winner=="O") ? (<>
+      <Row>
+      <Form.Label>Player {game?.winner} has won the game!!!</Form.Label>
+      </Row>
+      <Row>
+        <center><Button size="sm" style={{width:100}} onClick={()=> handleGameFinished()}>Finish Game</Button></center>
+      </Row>
+      </>
+      ) : game?.gameStatus=="ENDED" && game?.winner!="X" && game?.winner!="O" ? (<>
+      <Row>
+      <Form.Label>Game has finished as draw!</Form.Label>
+      </Row>
+      <Row>
+        <center><Button size="sm" style={{width:100}} onClick={()=> handleGameFinished()}>Finish Game</Button></center>
+      </Row></>) :
+      (<Form.Label>Now playing :<div className="playerturn">{game?.lastPlayedSign == 'X' ? 'O' : 'X'}</div></Form.Label>)}
       </div>
       </center>
       </Col>
