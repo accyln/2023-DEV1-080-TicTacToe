@@ -107,7 +107,7 @@ public class GameService implements IGameService {
         for (Game game:result) {
             Player player1=playerRepository.findById(game.getPlayer1Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer1Id()));
             Player player2=playerRepository.findById(game.getPlayer2Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer2Id()));
-            gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner()));
+            gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner(),game.getGameStatus()));
         }
         return gameDetailList;
     }
