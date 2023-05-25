@@ -11,7 +11,6 @@ export function GetPlayerInfosModal(props){
     }
 
     return (
-
         <Modal
             show={props.show}
             size="sm"

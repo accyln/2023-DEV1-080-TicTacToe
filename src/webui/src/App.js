@@ -13,7 +13,7 @@ export function App() {
 
         <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/Game' element={<Game/>} />
+        <Route path='/Game/:gameId' element={<Game/>} />
         </Routes>
 
        
