@@ -55,15 +55,15 @@ public class GameService implements IGameService {
 
         //check game is ongoing
         if (checkGameRulesHelper.isGameFinished(game)) {
-            throw new GameAlreadyFinishedException("Game has already finished. You cannot sign.");
+            throw new GameAlreadyFinishedException("Game has already finished. You cannot make a move.");
         }
         //checking FirstPlayer Sign is X
         if(game.getMoveCount()==0 && sign!='X'){
-            throw new InvalidFirstMovingPlayerSignException("First sign must be X");
+            throw new InvalidFirstMovingPlayerSignException("First playing sign must be X");
         }
         //checking that played square is empty
         if(!checkGameRulesHelper.isSquareEmpty(game,rowId,colId)){
-            throw new SquareAlreadyTakenException("This square is not null, rowId: "+rowId+ " colId: "+colId);
+            throw new SquareAlreadyTakenException("This square is not empty, cannot sign!  (rowId: "+rowId+ " colId: "+colId+")");
         }
         //checking that current player sign is not equal to last move
         if(!checkGameRulesHelper.isThisSignsTurn(game,sign)){
@@ -107,7 +107,7 @@ public class GameService implements IGameService {
         for (Game game:result) {
             Player player1=playerRepository.findById(game.getPlayer1Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer1Id()));
             Player player2=playerRepository.findById(game.getPlayer2Id()).orElseThrow(()-> new NotFoundException("Cannot find a player with id:"+ game.getPlayer2Id()));
-            gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner()));
+            gameDetailList.add(new GameDetailsResponseDto(game.getId(),player1,player2,game.getWinner(),game.getGameStatus()));
         }
         return gameDetailList;
     }
