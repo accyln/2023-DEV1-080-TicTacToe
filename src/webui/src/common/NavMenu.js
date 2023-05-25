@@ -17,13 +17,12 @@ export class NavMenu extends Component {
             <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
               <Container>
                 <NavbarBrand tag={Link} to="/">Tic-Tac-Toe Game</NavbarBrand>
-                <div ><span style={{marginRight:10}}></span></div>
-                  <ul className="navbar-nav flex-grow">
+                  <ul className="navbar-nav flex-grow" style={{float:"right"}}>
                     <NavItem>
                       <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                     </NavItem>   
                     <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/">Game History</NavLink>
+                      <NavLink tag={Link} className="text-dark" to="/GameHistory">Game History</NavLink>
                     </NavItem> 
                   </ul>
               </Container>
