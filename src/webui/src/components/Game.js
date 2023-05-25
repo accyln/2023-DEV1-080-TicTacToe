@@ -4,7 +4,7 @@ import { Row, Col,Button} from 'react-bootstrap'
 
 export function Game(props){
 
-    const [game,setGame]=useState([['aa','bb','vv'],[' ',' ',' '],[' ',' ',' ']]);
+    const [game,setGame]=useState([[]]);
 
     useEffect(()=>{
         debugger;
@@ -49,8 +49,6 @@ export function Game(props){
       </center>
       </Col>
      </Row>
-
     </div>
     )
-
 }
