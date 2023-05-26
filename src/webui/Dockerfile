@@ -6,9 +6,9 @@ WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
-COPY /public /usr/src/app/public
-COPY /src /usr/src/app/src
-COPY /package.json /usr/src/app/package.json
+COPY src/webui/public /usr/src/app/public
+COPY src/webui/src /usr/src/app/src
+COPY src/webui/package.json /usr/src/app/package.json
 RUN npm install
 
 EXPOSE 3000
