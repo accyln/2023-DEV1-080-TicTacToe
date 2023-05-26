@@ -93,7 +93,13 @@ class GameServiceTests {
     void test_getAllGames(){
         List<GameDetailsResponseDto> gameListResult=gameService.getAllGamesWithDetails();
 
+        GameDetailsResponseDto gameDetailsResponseDto=gameListResult.get(0);
+
         Assertions.assertEquals(1,gameListResult.size());
+        Assertions.assertEquals(GameStatus.ONGOING,gameDetailsResponseDto.getGameStatus());
+        Assertions.assertEquals(1l,gameDetailsResponseDto.getPlayer1().getId());
+
+
     }
 
     @Test

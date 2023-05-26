@@ -2,6 +2,7 @@ package com.accyln.tictactoe.mockRepositories;
 
 import com.accyln.tictactoe.entities.Game;
 import com.accyln.tictactoe.entities.Player;
+import com.accyln.tictactoe.enums.GameStatus;
 import com.accyln.tictactoe.repositories.IGameRepository;
 import org.mockito.Mockito;
 
