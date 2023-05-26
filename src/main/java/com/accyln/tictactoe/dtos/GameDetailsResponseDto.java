@@ -2,10 +2,8 @@ package com.accyln.tictactoe.dtos;
 
 import com.accyln.tictactoe.entities.Player;
 import com.accyln.tictactoe.enums.GameStatus;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
