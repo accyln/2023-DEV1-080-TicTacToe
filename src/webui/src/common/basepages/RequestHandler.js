@@ -6,12 +6,7 @@ import { PostSecure, GetSecure } from './RequestBase';
 export function PostSecureBase(action, body, token) {
     return PostSecure(action, body, token).then(response => {
         if (response && response.ok) {
-            if (response.status === 204) { //204 ise statüyü dön yoksa tüm response
-                return response.status
-            }
-            else {
-                return response.json()
-            }
+            return response.json()
         }
         else if (response) {
             if(response.status === 401){
@@ -39,10 +34,7 @@ export function PostSecureBase(action, body, token) {
 export function GetSecureBase(action, token) {
     return GetSecure(action, token).then(response => {
         if (response && response.ok) {
-            if (response.status === 204) {
-                return null;
-            }
-            else return response.json()
+            return response.json()
         }
         else if (response) {
             if (response.status === 401) {
