@@ -8,7 +8,7 @@ services:
       dockerfile: /Dockerfile
 
   webui:
-    image: ${DOCKER_REGISTRY-}npmt
+    image: ${DOCKER_REGISTRY-}webui
     build:
       context: .
-      dockerfile: src\webui/Dockerfile
+      dockerfile: src/webui/Dockerfile

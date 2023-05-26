@@ -3,7 +3,7 @@ version: '3.4'
 services:
   tictactoe:
     ports:
-      - "35284:80"
+      - "8080:8080"
 
 
   webui:

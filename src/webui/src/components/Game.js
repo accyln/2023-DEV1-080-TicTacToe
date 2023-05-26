@@ -7,7 +7,9 @@ import { GetSecureBase,PostSecureBase } from "../common/basepages/RequestHandler
 
 export function Game(props) {
 
-    const [game, setGame] = useState([[]]);
+    const [game, setGame] = useState([]);
+    const [playerXInfo, setPlayerXInfo] = useState([]);
+    const [playerOInfo, setPlayerOInfo] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const propsVariables = useParams();
@@ -23,8 +25,20 @@ export function Game(props) {
           ).then((data) => {
                 if (data) {
                     setGame(data);
+                    getPlayerInfo(data.player1Id,1)
+                    getPlayerInfo(data.player2Id,2)
                     setLoading(false);
                 }
+            });
+    }
+
+    function getPlayerInfo(playerId,index) {
+        GetSecureBase(
+            "api/v1/game/getPlayerById?playerId="+playerId
+          ).then((data) => {
+                if (data) {
+                    if(index==1) setPlayerXInfo(data);
+                }   if(index==2) setPlayerOInfo(data);
             });
     }
 
@@ -121,7 +135,19 @@ export function Game(props) {
                     <div style={{ height: 100, marginTop: 30 }}></div>
                 </Row>
                 <Row>
-                    <Col sm={4}></Col>
+                    <Col sm={4}>
+                    
+                        <Row style={{marginTop:50}}><center>
+                            <Form.Label style={{marginLeft:150,float:"right"}}>{playerXInfo.playerName +" : "+ playerXInfo.playerSign}</Form.Label>
+                            </center>
+                        </Row>
+                        <br></br>
+                        <Row><center>
+                            <Form.Label style={{marginLeft:150,float:"right"}}>{playerOInfo.playerName +" : "+ playerOInfo.playerSign}</Form.Label>
+
+                            </center>
+                        </Row>
+                    </Col>
                     <Col sm={4}><center>
                         <div className="gameBoard">
                             {game?.board ? (<>
@@ -145,7 +171,10 @@ export function Game(props) {
                             <br></br>
                             {game?.gameStatus == "ENDED" && (game?.winner == "X" || game?.winner == "O") ? (<>
                                 <Row>
-                                    <Form.Label>Player {game?.winner} has won the game!!!</Form.Label>
+                                    <Form.Label>Player {game?.winner} has won the game!</Form.Label>
+                                </Row>
+                                <Row>
+                                    <Form.Label>{game?.winner=="X" ? playerXInfo.playerName : playerOInfo.playerName }</Form.Label>
                                 </Row>
                                 <Row>
                                     <center><Button size="sm" style={{ width: 100 }} onClick={() => handleGameFinished()}>Finish Game</Button></center>

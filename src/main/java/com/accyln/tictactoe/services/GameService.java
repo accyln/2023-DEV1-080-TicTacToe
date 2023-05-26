@@ -91,11 +91,11 @@ public class GameService implements IGameService {
 
 
     public Player getPlayerById(Long playerId){
-        return playerRepository.findById(playerId).orElseThrow(()-> new NotFoundException("Player not found "+ playerId));
+        return playerRepository.findById(playerId).orElseThrow(()-> new NotFoundException("Player not found with playerId: "+ playerId));
     }
 
     public Game getGameById(Long gameId){
-        return gameRepository.findById(gameId).orElseThrow(()-> new NotFoundException("Player not found "+ gameId));
+        return gameRepository.findById(gameId).orElseThrow(()-> new NotFoundException("Game not found with gameId: "+ gameId));
     }
 
     public List<GameDetailsResponseDto> getAllGamesWithDetails(){
