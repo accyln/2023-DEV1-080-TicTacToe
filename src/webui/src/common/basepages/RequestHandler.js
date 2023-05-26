@@ -3,8 +3,8 @@ import {Navigate } from "react-router-dom";
 import { PostSecure, GetSecure } from './RequestBase';
 
 
-export function PostSecureBase(action, body, token) {
-    return PostSecure(action, body, token).then(response => {
+export function PostSecureBase(action, body) {
+    return PostSecure(action, body).then(response => {
         if (response && response.ok) {
             return response.json()
         }
@@ -31,8 +31,8 @@ export function PostSecureBase(action, body, token) {
         });
 }
 
-export function GetSecureBase(action, token) {
-    return GetSecure(action, token).then(response => {
+export function GetSecureBase(action) {
+    return GetSecure(action).then(response => {
         if (response && response.ok) {
             return response.json()
         }
