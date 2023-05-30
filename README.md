@@ -31,7 +31,7 @@ There will be 2 container: <code>TicTacToe</code> <code>WebUi</code> <br />
 <p><h5>Without Docker</h5></p>
 1.Download or clone the solution to your local computer<br /> 
 2.Open command promt in solution path and run <code>mvn package</code><br />
-3.Run <code>java -jar tictactoe-0.0.1-SNAPSHOT.jar</code><br />
+3.Cd to /target folder and Run <code>java -jar tictactoe-0.0.1-SNAPSHOT.jar</code><br />
 4.Navigate to <a href="http://localhost:8080/swagger-ui/index.html" target="_blank">http://localhost:8080/swagger-ui/index.html</a> , swagger will be opened<br />
 5.For the game ui , open command prompt in webui path (src/webui) and run <code>npm install</code><br />
 6.After npm packages installation finish, run command <code>npm start</code><br />
